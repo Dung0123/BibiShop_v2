@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" >
+<head>
+  <meta charset="UTF-8">
+  <title>Chi tiết hóa đơn</title>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    .table th, .table td { vertical-align: middle; }
+    .card-body h5 { margin-bottom: 1rem; }
+    #invoice-content { position: relative; }
+    @media print {
+      body * { visibility: hidden; }
+      #printable-area, #printable-area * { visibility: visible; }
+      #printable-area { position: absolute; top: 0; left: 0; width: 100%; }
+    }
+  </style>
+</head>
+<body>
+<th:block th:fragment="body">
+  <div class="container mt-4">
+    <h2 class="mb-3">Chi tiết hóa đơn #<span th:text="${billdetail.maHoaDon}"></span></h2>
+
+    <div class="card">
+      <div class="card-body" id="invoice-content">
+        <!-- Thông tin cửa hàng (tĩnh) -->
+        <h5 class="text-muted">Thông tin cửa hàng</h5>
+        <p><strong>Tên cửa hàng:</strong> <span id="store-name">Bibi Shop</span></p>
+        <p><strong>Số điện thoại:</strong> <span id="store-phone">0912345678</span></p>
+        <p><strong>Địa chỉ:</strong> <span id="store-address">123 Đường Láng, Quận Đống Đa, Hà Nội</span></p>
+        <button type="button" class="btn btn-primary btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#editStoreModal">
+          Chỉnh sửa thông tin cửa hàng
+        </button>
+
+        <!-- Modal chỉnh sửa thông tin cửa hàng -->
+        <div class="modal fade" id="editStoreModal" tabindex="-1" aria-labelledby="editStoreModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="editStoreModalLabel">Chỉnh sửa thông tin cửa hàng</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="mb-3">
+                  <label for="edit-store-name" class="form-label">Tên cửa hàng</label>
+                  <input type="text" class="form-control" id="edit-store-name" value="Bibi Shop">
+                </div>
+                <div class="mb-3">
+                  <label for="edit-store-phone" class="form-label">Số điện thoại</label>
+                  <input type="text" class="form-control" id="edit-store-phone" value="0912345678">
+                </div>
+                <div class="mb-3">
+                  <label for="edit-store-address" class="form-label">Địa chỉ</label>
+                  <input type="text" class="form-control" id="edit-store-address" value="123 Đường Láng, Quận Đống Đa, Hà Nội">
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" id="save-store-info">Lưu thay đổi</button>
+                <button type="button" class="btn btn-success" id="set-default-store-info">Đặt làm mặc định</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Thông tin khách hàng -->
+        <h5 class="text-muted mt-4">Thông tin khách hàng</h5>
+        <p><strong>Tên:</strong>
+          <span th:text="${billdetail.khachHang != null ? (billdetail.khachHang.ho + ' ' + (billdetail.khachHang.tenDem != null ? billdetail.khachHang.tenDem + ' ' : '') + billdetail.khachHang.ten) : (billdetail.tenKhachhang ?: 'Khách lẻ')}"></span>
+        </p>
+        <p><strong>Địa chỉ:</strong> <span th:text="${billdetail.diaChi ?: 'Không có'}"></span></p>
+        <p><strong>Số điện thoại:</strong> <span th:text="${billdetail.sdtKhachhang ?: 'Không có'}"></span></p>
+
+        <!-- Danh sách sản phẩm -->
+        <h5 class="text-muted mt-4">Danh sách sản phẩm</h5>
+        <table class="table table-bordered">
+          <thead class="table-light">
+          <tr>
+            <th>Sản phẩm</th>
+            <th>Màu sắc</th>
+            <th>Kích cỡ</th>
+            <th>Giá tiền</th>
+            <th>Số lượng</th>
+            <th>Thành tiền</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="productDetail : ${billDetailProduct}">
+            <td th:text="${productDetail.sanPham.tenSanPham}"></td>
+            <td th:text="${productDetail.sanPhamChiTiet.mauSac != null ? productDetail.sanPhamChiTiet.mauSac.ten : 'Không có'}"></td>
+            <td th:text="${productDetail.sanPhamChiTiet.kichCo != null ? productDetail.sanPhamChiTiet.kichCo.tenKichCo : 'Không có'}"></td>
+            <td th:text="${#numbers.formatDecimal(productDetail.gia, 0, 'POINT', 0, 'COMMA')} + ' VNĐ'"></td>
+            <td th:text="${productDetail.soLuong}"></td>
+            <td th:text="${#numbers.formatDecimal(productDetail.gia.multiply(productDetail.soLuong), 0, 'POINT', 0, 'COMMA')} + ' VNĐ'"></td>
+          </tr>
+          </tbody>
+        </table>
+
+        <!-- Thông tin đơn hàng -->
+        <h5 class="mt-3">Loại đơn:
+          <span th:text="${billdetail.loaiHoaDon == 'OFFLINE' ? 'Tại quầy' : 'Online'}" class="text-primary"></span>
+        </h5>
+        <h5>Tổng thanh toán sản phẩm:
+          <span th:text="${#numbers.formatDecimal(total, 0, 'POINT', 0, 'COMMA')} + ' VNĐ'"></span>
+        </h5>
+        <h5>Phí ship:
+          <span th:text="${billdetail.loaiHoaDon == 'OFFLINE' ? '0' : '30,000'} + ' VNĐ'"></span>
+        </h5>
+        <h4><strong>Tổng thanh toán:</strong>
+          <span th:text="${#numbers.formatDecimal(total + (billdetail.loaiHoaDon == 'OFFLINE' ? 0 : 30000), 0, 'POINT', 0, 'COMMA')} + ' VNĐ'"></span>
+        </h4>
+
+        <!-- Nút hành động -->
+        <div class="mt-4">
+          <button id="print-invoice" class="btn btn-success"><i class="fa fa-print"></i> In hóa đơn</button>
+          <a th:href="@{'/admin/bill-list'}" class="btn btn-secondary">Đóng</a>
+        </div>
+
+        <!-- Thay đổi trạng thái đơn hàng -->
+        <div th:if="${billdetail.trangThai != 'HOAN_THANH'}">
+          <h5 class="mt-4">Thay đổi trạng thái đơn hàng</h5>
+          <form th:action="@{'/admin/update-bill-status/'+${billdetail.maHoaDon}}" method="post">
+            <select name="trangThaiDonHang" class="form-select mb-3" th:value="${billdetail.trangThai}">
+              <option value="CHO_XAC_NHAN" th:selected="${billdetail.trangThai == 'CHO_XAC_NHAN'}">Chờ xác nhận</option>
+              <option value="CHO_LAY_HANG" th:selected="${billdetail.trangThai == 'CHO_LAY_HANG'}">Chờ lấy hàng</option>
+              <option value="CHO_GIAO_HANG" th:selected="${billdetail.trangThai == 'CHO_GIAO_HANG'}">Chờ giao hàng</option>
+              <option value="HOAN_THANH" th:selected="${billdetail.trangThai == 'HOAN_THANH'}">Hoàn thành</option>
+              <option value="HUY" th:selected="${billdetail.trangThai == 'HUY'}">Hủy đơn</option>
+            </select>
+            <button type="submit" class="btn btn-primary">Cập nhật</button>
+          </form>
+        </div>
+        <div th:if="${billdetail.trangThai == 'HOAN_THANH'}" class="mt-4">
+          <h5 class="text-success">Đơn hàng đã hoàn thành, không thể chỉnh sửa.</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Khu vực ẩn để in -->
+  <div id="printable-area" style="display: none;"></div>
+
+  <script>
+    $(document).ready(function () {
+      // Khởi tạo thông tin cửa hàng từ localStorage (nếu có)
+      const defaultStoreName = $("#store-name").text();
+      const defaultStorePhone = $("#store-phone").text();
+      const defaultStoreAddress = $("#store-address").text();
+
+      const savedStoreName = localStorage.getItem("storeName");
+      const savedStorePhone = localStorage.getItem("storePhone");
+      const savedStoreAddress = localStorage.getItem("storeAddress");
+
+      if (savedStoreName) $("#store-name").text(savedStoreName);
+      if (savedStorePhone) $("#store-phone").text(savedStorePhone);
+      if (savedStoreAddress) $("#store-address").text(savedStoreAddress);
+
+      // Xử lý in hóa đơn
+      $("#print-invoice").on("click", function () {
+        html2canvas(document.querySelector("#invoice-content")).then(canvas => {
+          const imgData = canvas.toDataURL("image/png");
+          const printableArea = document.getElementById("printable-area");
+          printableArea.innerHTML = "";
+          const img = document.createElement("img");
+          img.src = imgData;
+          img.style.width = "100%";
+          printableArea.appendChild(img);
+          window.print();
+        });
+      });
+
+      // Xử lý chỉnh sửa thông tin cửa hàng
+      $("#save-store-info").on("click", function () {
+        const newStoreName = $("#edit-store-name").val();
+        const newStorePhone = $("#edit-store-phone").val();
+        const newStoreAddress = $("#edit-store-address").val();
+
+        // Cập nhật thông tin trên giao diện
+        $("#store-name").text(newStoreName);
+        $("#store-phone").text(newStorePhone);
+        $("#store-address").text(newStoreAddress);
+
+        // Đóng modal
+        $("#editStoreModal").modal("hide");
+      });
+
+      // Xử lý đặt làm mặc định
+      $("#set-default-store-info").on("click", function () {
+        const newStoreName = $("#edit-store-name").val();
+        const newStorePhone = $("#edit-store-phone").val();
+        const newStoreAddress = $("#edit-store-address").val();
+
+        // Lưu vào localStorage
+        localStorage.setItem("storeName", newStoreName);
+        localStorage.setItem("storePhone", newStorePhone);
+        localStorage.setItem("storeAddress", newStoreAddress);
+
+        // Cập nhật giao diện
+        $("#store-name").text(newStoreName);
+        $("#store-phone").text(newStorePhone);
+        $("#store-address").text(newStoreAddress);
+
+        // Đóng modal và thông báo
+        $("#editStoreModal").modal("hide");
+        Swal.fire({
+          icon: "success",
+          title: "Thành công!",
+          text: "Thông tin cửa hàng đã được đặt làm mặc định.",
+        });
+      });
+
+      // Điền giá trị hiện tại vào form khi mở modal
+      $("#editStoreModal").on("show.bs.modal", function () {
+        $("#edit-store-name").val($("#store-name").text());
+        $("#edit-store-phone").val($("#store-phone").text());
+        $("#edit-store-address").val($("#store-address").text());
+      });
+    });
+  </script>
+</th:block>
+</body>
+</html>

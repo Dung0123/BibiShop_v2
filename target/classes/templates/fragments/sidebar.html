@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+<nav class="sidebar" th:fragment="sidebar">
+  <h5>Dashboard</h5>
+  <ul class="nav flex-column">
+    <li class="nav-item">
+      <a class="nav-link" th:href="@{/admin}">Trang chủ</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" th:href="@{/admin/bill-list}">Quản lý hóa đơn</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" th:href="@{/admin/products}">Quản lý sản phẩm</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" th:href="@{/admin/customers}">Quản lý khách hàng</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" th:href="@{/admin/reports}">Báo cáo</a>
+    </li>
+  </ul>
+</nav>
+</body>
+</html>

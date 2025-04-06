@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập</title>
+<!--    <link rel="stylesheet" th:href="@{/css/admin/login.css}"/>-->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="login-container">
+    <h2>Đăng nhập</h2>
+
+    <!-- Form đăng nhập -->
+    <form th:action="@{/login}" method="post">
+        <div class="input-group">
+            <label for="username">Tên đăng nhập:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div class="input-group">
+            <label for="password">Mật khẩu:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit">Đăng nhập</button>
+        <div class="forgot-password">
+            <a href="#">Quên mật khẩu?</a>
+        </div>
+    </form>
+</div>
+
+<!-- Toast thông báo -->
+<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1050;">
+    <div id="toastMessage" class="toast align-items-center text-white bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body" id="toastBody"></div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+<!-- Nhận trạng thái từ session -->
+<input type="hidden" id="status" th:value="${session.status}">
+<input type="hidden" id="message" th:value="${session.message}">
+
+<!-- JavaScript để hiển thị thông báo -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let status = document.getElementById("status").value;
+        let message = document.getElementById("message").value;
+        if (status && message) {
+            let toastEl = document.getElementById("toastMessage");
+            let toastBody = document.getElementById("toastBody");
+
+            // Set màu theo trạng thái
+            if (status === "success") {
+                toastEl.classList.remove("bg-danger");
+                toastEl.classList.add("bg-success");
+            } else {
+                toastEl.classList.remove("bg-success");
+                toastEl.classList.add("bg-danger");
+            }
+
+            toastBody.textContent = message;
+            let toast = new bootstrap.Toast(toastEl);
+            toast.show();
+        }
+    });
+</script>
+
+</body>
+</html>

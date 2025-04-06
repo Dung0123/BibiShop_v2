@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Hóa Đơn</title>
+  <style>
+    body { font-family: Arial, sans-serif; }
+    .invoice { width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #000; }
+    .invoice-header { text-align: center; }
+    .invoice-details { margin: 20px 0; }
+  </style>
+</head>
+<body>
+<div class="invoice">
+  <div class="invoice-header">
+    <h2>Hóa Đơn</h2>
+    <p>Mã hóa đơn: <span th:text="${hoaDon.maHoaDon}"></span></p>
+    <p>Thời gian tạo: <span th:text="${hoaDon.ngayTao}"></span></p>
+  </div>
+
+  <div class="invoice-details">
+    <p><strong>Tên khách hàng:</strong> <span th:text="${hoaDon.tenKhachhang}"></span></p>
+    <p><strong>Số điện thoại:</strong> <span th:text="${hoaDon.sdtKhachhang}"></span></p>
+    <p><strong>Địa chỉ:</strong> <span th:text="${hoaDon.diaChi}"></span></p>
+  </div>
+
+  <table border="1" style="width: 100%;">
+    <thead>
+    <tr>
+      <th>STT</th>
+      <th>Tên Sản Phẩm</th>
+      <th>Số Lượng</th>
+      <th>Đơn Giá</th>
+      <th>Tổng Tiền</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item, iter : ${hoaDon.chiTietHoaDon}">
+      <td th:text="${iter.count}"></td>
+      <td th:text="${item.sanPhamChiTiet.sanPham.tenSanPham}"></td>
+      <td th:text="${item.soLuong}"></td>
+      <td th:text="${item.gia}"></td>
+      <td th:text="${item.gia * item.soLuong}"></td>
+    </tr>
+    </tbody>
+  </table>
+
+  <h4 style="text-align: right;">Tổng tiền: <span th:text="${hoaDon.tongTien}"></span>đ</h4>
+</div>
+</body>
+</html>

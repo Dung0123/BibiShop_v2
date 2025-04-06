@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout}">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+</head>
+<body>
+<th:block th:fragment="body">
+  <div class="container mt-4">
+    <h2>Chào mừng đến với Admin Dashboard</h2>
+    <p>Đây là trang quản trị của Bibi Shop. Bạn có thể quản lý hóa đơn, sản phẩm, khách hàng và nhiều thứ khác từ đây.</p>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Quản lý hóa đơn</h5>
+            <p class="card-text">Xem và quản lý tất cả hóa đơn của cửa hàng.</p>
+            <a th:href="@{/admin/bill-list}" class="btn btn-primary">Đi đến hóa đơn</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Quản lý sản phẩm</h5>
+            <p class="card-text">Thêm, sửa, xóa sản phẩm trong cửa hàng.</p>
+            <a th:href="@{/admin/products}" class="btn btn-primary">Đi đến sản phẩm</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Quản lý khách hàng</h5>
+            <p class="card-text">Xem thông tin và quản lý khách hàng.</p>
+            <a th:href="@{/admin/customers}" class="btn btn-primary">Đi đến khách hàng</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</th:block>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <title>Giỏ hàng</title>
+    <style>
+        #cart-page {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        #cart-page h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #cart-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        #cart-table th, #cart-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+        #cart-table th {
+            background-color: #09596d;
+            color: white;
+            font-weight: bold;
+        }
+        #cart-table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+        .cart-total {
+            font-size: 1.2em;
+            font-weight: bold;
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        .cart-actions {
+            text-align: center;
+        }
+        .cart-actions button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .cart-actions button:hover {
+            background-color: #218838;
+        }
+        .cart-actions a {
+            display: inline-block;
+            margin-top: 10px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .cart-actions a:hover {
+            text-decoration: underline;
+        }
+        .product-image {
+            max-width: 80px;
+            height: auto;
+        }
+        .remove-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .quantity-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .quantity-btn:hover {
+            background-color: #0056b3;
+        }
+        .quantity-input {
+            width: 50px;
+            text-align: center;
+            border: 1px solid #ddd;
+            padding: 5px;
+            border-radius: 5px;
+        }
+    </style>
+    <script>
+        function updateQuantity(index, change) {
+            fetch('/cart/update', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ index: index, change: change })
+            }).then(() => location.reload());
+        }
+
+        function removeFromCart(index) {
+            fetch('/cart/remove', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ index: index })
+            }).then(() => location.reload());
+        }
+    </script>
+</head>
+<body>
+    <h1>Giỏ hàng của bạn</h1>
+
+    <table id="cart-table">
+        <thead>
+        <tr>
+            <th>Hình ảnh</th>
+            <th>Tên sản phẩm</th>
+            <th>Số lượng</th>
+            <th>Giá thành</th>
+            <th>Thành tiền</th>
+            <th>Hành động</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item, iterStat : ${cart}" th:data-index="${iterStat.index}">
+            <td><img th:src="${item['image']}" alt="Product Image" class="product-image"></td>
+            <td>
+                <div><strong th:text="${item['name']}"></strong></div>
+                <div th:text="${item['category']}" style="font-size: 0.9em; color: gray;"></div>
+                <div th:text="${item['color']}" style="font-size: 0.9em; color: gray;"></div>
+                <div th:text="${item['size']}" style="font-size: 0.9em; color: gray;"></div>
+            </td>
+            <td>
+                <div class="quantity-container">
+                    <button class="quantity-btn" th:onclick="updateQuantity([[${iterStat.index}]], -1)">-</button>
+                    <input type="number" th:value="${item['quantity']}" min="1" class="quantity-input" readonly>
+                    <button class="quantity-btn" th:onclick="updateQuantity([[${iterStat.index}]], 1)">+</button>
+                </div>
+            </td>
+            <td th:text="${#numbers.formatDecimal(item['price'], 0, 'COMMA', 0, 'POINT') + ' VNĐ'}"></td>
+            <td th:text="${#numbers.formatDecimal(item['quantity'] * item['price'], 0, 'COMMA', 0, 'POINT') + ' VNĐ'}"></td>
+            <td>
+                <button class="remove-btn" th:onclick="removeFromCart([[${iterStat.index}]])">Xóa</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3 class="cart-total" th:with="total=${#aggregates.sum(cart.![quantity * price])}">
+        Tổng tiền: <span th:text="${#numbers.formatDecimal((total == null ? 0 : total), 0, 'COMMA', 0, 'POINT') + ' VNĐ'}"></span>
+    </h3>
+
+    <div class="cart-actions">
+        <button onclick="checkout()">Thanh toán</button>
+        <br>
+        <a href="/product">Quay lại mua sắm</a>
+    </div>
+</body>
+</html>

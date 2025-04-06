@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>In hóa đơn</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { font-family: Arial, sans-serif; }
+    .invoice { max-width: 800px; margin: 0 auto; padding: 20px; }
+    .invoice h2 { font-size: 24px; margin-bottom: 20px; }
+    .invoice p { margin: 5px 0; }
+    .invoice table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    .invoice th, .invoice td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    .invoice th { background-color: #f5f5f5; }
+    .invoice .total { font-weight: bold; }
+  </style>
+</head>
+<body>
+<div class="invoice">
+  <h2>Chi tiết hóa đơn #<span th:text="${billdetail.maHoaDon}"></span></h2>
+
+  <h5 class="text-muted">Thông tin cửa hàng</h5>
+  <p><strong>Tên cửa hàng:</strong> <span id="store-name">Bibi Shop</span></p>
+  <p><strong>Số điện thoại:</strong> <span id="store-phone">0912345678</span></p>
+  <p><strong>Địa chỉ:</strong> <span id="store-address">123 Đường Láng, Quận Đống Đa, Hà Nội</span></p>
+
+  <h5 class="text-muted mt-4">Thông tin khách hàng</h5>
+  <p><strong>Tên:</strong>
+    <span th:text="${billdetail.khachHang != null ? (billdetail.khachHang.ho + ' ' + (billdetail.khachHang.tenDem != null ? billdetail.khachHang.tenDem + ' ' : '') + billdetail.khachHang.ten) : (billdetail.tenKhachhang ?: 'Khách lẻ')}"></span>
+  </p>
+  <p><strong>Địa chỉ:</strong> <span th:text="${billdetail.diaChi ?: 'Không có'}"></span></p>
+  <p><strong>Số điện thoại:</strong> <span th:text="${billdetail.sdtKhachhang ?: 'Không có'}"></span></p>
+
+  <h5 class="text-muted mt-4">Danh sách sản phẩm</h5>
+  <table>
+    <thead>
+    <tr>
+      <th>Sản phẩm</th>
+      <th>Màu sắc</th>
+      <th>Kích cỡ</th>
+      <th>Giá tiền</th>
+      <th>Số lượng</th>
+      <th>Thành tiền</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="productDetail : ${billDetailProduct}">
+      <td th:text="${productDetail.sanPham.tenSanPham}"></td>
+      <td th:text="${productDetail.sanPhamChiTiet.mauSac != null ? productDetail.sanPhamChiTiet.mauSac.ten : 'Không có'}"></td>
+      <td th:text="${productDetail.sanPhamChiTiet.kichCo != null ? productDetail.sanPhamChiTiet.kichCo.tenKichCo : 'Không có'}"></td>
+      <td th:text="${#numbers.formatDecimal(productDetail.gia, 0, 'POINT', 0, 'COMMA')} + ' VNĐ'"></td>
+      <td th:text="${productDetail.soLuong}"></td>
+      <td th:text="${#numbers.formatDecimal(productDetail.gia.multiply(productDetail.soLuong), 0, 'POINT', 0, 'COMMA')} + ' VNĐ'"></td>
+    </tr>
+    </tbody>
+  </table>
+
+  <h5 class="mt-3">Loại đơn:
+    <span th:text="${billdetail.loaiHoaDon == 'OFFLINE' ? 'Tại quầy' : 'Online'}" class="text-primary"></span>
+  </h5>
+  <h5>Tổng thanh toán sản phẩm:
+    <span th:text="${#numbers.formatDecimal(total, 0, 'POINT', 0, 'COMMA')} + ' VNĐ'"></span>
+  </h5>
+  <h5>Phí ship:
+    <span th:text="${billdetail.loaiHoaDon == 'OFFLINE' ? '0' : '30,000'} + ' VNĐ'"></span>
+  </h5>
+  <h4 class="total">Tổng thanh toán:
+    <span th:text="${#numbers.formatDecimal(total + (billdetail.loaiHoaDon == 'OFFLINE' ? 0 : 30000), 0, 'POINT', 0, 'COMMA')} + ' VNĐ'"></span>
+  </h4>
+</div>
+</body>
+</html>
