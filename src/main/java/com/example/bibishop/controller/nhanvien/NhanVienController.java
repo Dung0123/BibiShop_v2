@@ -34,20 +34,24 @@ public class NhanVienController {
                             @RequestParam(required = false) String address,
                             @RequestParam(defaultValue = "1", required = false) Integer page) {
         Page<NhanVien> users = nhanVienService.adminListUserPages(fullName, phone, email, page);
+        String fragmentPath = "admin/nhanvien/list :: listNhanVien";
         model.addAttribute("list", users.getContent());
         model.addAttribute("totalPages", users.getTotalPages());
         model.addAttribute("currentPage", users.getPageable().getPageNumber() + 1);
-        return "admin/nhan-vien/list";
+        model.addAttribute("fragmentPath",fragmentPath);
+
+        System.out.println(fragmentPath);
+            return "admin/index";
     }
 
     @GetMapping("/create")
     public String showAddEmployeeForm(Model model) {
         return "admin/nhan-vien/create";
+
     }
 
     @PostMapping("/create")
     public String addEmployee(@RequestBody CreateNhanVienRequest request) {
-
         NhanVien nhanVien = nhanVienService.saveEmployee(request);
         return "redirect:/admin/nhanvien/list";
     }

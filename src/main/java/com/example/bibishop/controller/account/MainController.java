@@ -22,6 +22,9 @@ public class MainController {
         if (!(auth instanceof AnonymousAuthenticationToken)) {
 
             NhanVien user = this.nhanVienRepository.findNhanVienByEmail(auth.getName());
+            if (user.getVaiTro() == 0) {
+                return "redirect:/index";
+            }
             if (user.getVaiTro()==3) {
                 return "redirect:/customer/home";
             }
@@ -54,6 +57,6 @@ public class MainController {
 //        }
 
         m.addAttribute("title", "Login | StoreWala");
-        return "login";
+        return "admin/Auth/login";
     }
 }
