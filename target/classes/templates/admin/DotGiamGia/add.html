@@ -25,7 +25,7 @@
     <span th:text="${message}"></span>
   </div>
 
-  <form th:action="@{/templates/client/dotgiamgia/add}" th:object="${newDotGiamGia}" method="post" class="row g-3">
+  <form th:action="@{/templates/zzz/client/dotgiamgia/add}" th:object="${newDotGiamGia}" method="post" class="row g-3">
     <div class="mb-3">
       <label for="ten" class="form-label">Tên Đợt Giảm Giá</label>
       <input type="text" class="form-control" id="ten" th:field="*{ten}" required>
@@ -52,7 +52,7 @@
     </div>
     <div class="text-center">
       <button type="submit" class="btn btn-dark" id="submitButton" disabled>Thêm Đợt Giảm Giá</button>
-      <a th:href="@{/templates/client/dotgiamgia/list}" class="btn btn-secondary">Hủy</a>
+      <a th:href="@{/templates/zzz/client/dotgiamgia/list}" class="btn btn-secondary">Hủy</a>
     </div>
   </form>
 </div>

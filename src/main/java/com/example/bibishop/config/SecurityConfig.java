@@ -56,7 +56,10 @@ public class SecurityConfig {
 						.requestMatchers("/admin/**").hasRole("ADMIN")
 						.requestMatchers("/customer/**").hasRole("CUSTOMER")
 						.requestMatchers("/seller/**").hasRole("SELLER")
-						.requestMatchers("/**").permitAll()
+       					.requestMatchers("/", "/login", "/css/**", "/js/**", "/images/**").permitAll()
+								.anyRequest().authenticated()
+//						.requestMatchers("/**").permitAll()
+
 				)
 				.formLogin(form -> form
 						.successHandler(new AuthenticationSuccessHandler() {
@@ -68,11 +71,11 @@ public class SecurityConfig {
 								session.setAttribute("message", "Đăng nhập thành công!");
 
 								NhanVien user = userRepo.findNhanVienByEmail(authentication.getName());
-								String redirectURL = request.getContextPath();
+//								String redirectURL = request.getContextPath();
+//
+//								redirectURL = "v1/admin/index";
 
-								redirectURL = "/admin/nhanvien/list";
-
-								response.sendRedirect(redirectURL + "?status=success&message=Login success!");
+								response.sendRedirect("/index");
 							}
 						})
 						.failureHandler(new AuthenticationFailureHandler() {

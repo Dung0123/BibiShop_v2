@@ -1,0 +1,266 @@
+<th:block th:fragment="satistical">
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-success pull-right">Monthly</span>
+                        <h5>Doanh Thu</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">40 886,200</h1>
+                        <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div>
+                        <small>Tổng Doanh Thu</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-info pull-right">Annual</span>
+                        <h5>Đơn Hàng</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">275,800</h1>
+                        <div class="stat-percent font-bold text-info">20% <i class="fa fa-level-up"></i></div>
+                        <small>Đơn mới</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Thống Kê</h5>
+                        <div class="pull-right">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-xs btn-white active">Today</button>
+                                <button type="button" class="btn btn-xs btn-white">Monthly</button>
+                                <button type="button" class="btn btn-xs btn-white">Annual</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <div class="ibox float-e-margins">
+                                    <div class="ibox-title">
+                                        <h5>Doanh Thu Theo Tháng <small>Đơn Vị: triệu VNĐ</small></h5>
+                                        <div class="ibox-tools">
+                                            <a class="collapse-link">
+                                                <i class="fa fa-chevron-up"></i>
+                                            </a>
+                                            <a class="close-link">
+                                                <i class="fa fa-times"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="ibox-content">
+                                        <div class="flot-chart">
+                                            <div class="flot-chart-content" id="flot-bar-chart"
+                                                 style="padding: 0px; position: relative;"><canvas
+                                                    class="flot-base" width="569" height="200"
+                                                    style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 569.5px; height: 200px;"></canvas>
+                                                <div class="flot-text"
+                                                     style="position: absolute; inset: 0px; font-size: smaller; color: rgb(84, 84, 84);">
+                                                    <div class="flot-x-axis flot-x1-axis xAxis x1Axis"
+                                                         style="position: absolute; inset: 0px;">
+                                                        <div class="flot-tick-label tickLabel"
+                                                             style="position: absolute; max-width: 81px; top: 185px; left: 15px; text-align: center;">
+                                                            1</div>
+                                                        <div class="flot-tick-label tickLabel"
+                                                             style="position: absolute; max-width: 81px; top: 185px; left: 112px; text-align: center;">
+                                                            2</div>
+                                                        <div class="flot-tick-label tickLabel"
+                                                             style="position: absolute; max-width: 81px; top: 185px; left: 209px; text-align: center;">
+                                                            3</div>
+                                                        <div class="flot-tick-label tickLabel"
+                                                             style="position: absolute; max-width: 81px; top: 185px; left: 306px; text-align: center;">
+                                                            4</div>
+                                                        <div class="flot-tick-label tickLabel"
+                                                             style="position: absolute; max-width: 81px; top: 185px; left: 403px; text-align: center;">
+                                                            5</div>
+                                                        <div class="flot-tick-label tickLabel"
+                                                             style="position: absolute; max-width: 81px; top: 185px; left: 500px; text-align: center;">
+                                                            6</div>
+                                                    </div>
+                                                    <div class="flot-y-axis flot-y1-axis yAxis y1Axis"
+                                                         style="position: absolute; inset: 0px;">
+                                                        <div class="flot-tick-label tickLabel"
+                                                             style="position: absolute; top: 171px; left: 6px; text-align: right;">
+                                                            0</div>
+                                                        <div class="flot-tick-label tickLabel"
+                                                             style="position: absolute; top: 137px; left: 0px; text-align: right;">
+                                                            10</div>
+                                                        <div class="flot-tick-label tickLabel"
+                                                             style="position: absolute; top: 103px; left: 0px; text-align: right;">
+                                                            20</div>
+                                                        <div class="flot-tick-label tickLabel"
+                                                             style="position: absolute; top: 69px; left: 0px; text-align: right;">
+                                                            30</div>
+                                                        <div class="flot-tick-label tickLabel"
+                                                             style="position: absolute; top: 34px; left: 0px; text-align: right;">
+                                                            40</div>
+                                                        <div class="flot-tick-label tickLabel"
+                                                             style="position: absolute; top: 0px; left: 0px; text-align: right;">
+                                                            50</div>
+                                                    </div>
+                                                </div><canvas class="flot-overlay" width="569" height="200"
+                                                              style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 569.5px; height: 200px;"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="ibox float-e-margins">
+                                    <div class="ibox-title">
+                                        <h5>Danh Mục Bán Chạy Nhất</h5>
+                                        <div class="ibox-tools">
+                                            <a class="collapse-link">
+                                                <i class="fa fa-chevron-up"></i>
+                                            </a>
+                                            <a class="close-link">
+                                                <i class="fa fa-times"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="ibox-content">
+                                        <div class="flot-chart">
+                                            <div class="flot-chart-pie-content" id="flot-pie-chart"
+                                                 style="padding: 0px; position: relative;"><canvas
+                                                    class="flot-base" width="200" height="200"
+                                                    style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 200px; height: 200px;"></canvas><canvas
+                                                    class="flot-overlay" width="200" height="200"
+                                                    style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 200px; height: 200px;"></canvas>
+                                                <div class="legend">
+                                                    <div
+                                                            style="position: absolute; width: 53.9375px; height: 61.875px; top: 5px; right: 5px; background-color: rgb(255, 255, 255); opacity: 0.85;">
+                                                    </div>
+                                                    <table
+                                                            style="position:absolute;top:5px;right:5px;;font-size:smaller;color:#545454">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td class="legendColorBox">
+                                                                <div
+                                                                        style="border:1px solid #ccc;padding:1px">
+                                                                    <div
+                                                                            style="width:4px;height:0;border:5px solid #d3d3d3;overflow:hidden">
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="legendLabel">Sales 1</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="legendColorBox">
+                                                                <div
+                                                                        style="border:1px solid #ccc;padding:1px">
+                                                                    <div
+                                                                            style="width:4px;height:0;border:5px solid #bababa;overflow:hidden">
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="legendLabel">Sales 2</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="legendColorBox">
+                                                                <div
+                                                                        style="border:1px solid #ccc;padding:1px">
+                                                                    <div
+                                                                            style="width:4px;height:0;border:5px solid #79d2c0;overflow:hidden">
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="legendLabel">Sales 3</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="legendColorBox">
+                                                                <div
+                                                                        style="border:1px solid #ccc;padding:1px">
+                                                                    <div
+                                                                            style="width:4px;height:0;border:5px solid #1ab394;overflow:hidden">
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="legendLabel">Sales 4</td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12"></div>
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Sản Phẩm Bán Chạy</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li><a href="#">Config option 1</a>
+                            </li>
+                            <li><a href="#">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Tên Sản Phẩm</th>
+                            <th>Ảnh</th>
+                            <th>Size</th>
+                            <th>Màu</th>
+                            <th>Hãng</th>
+                            <th>Số lượng</th>
+                            <th>Doanh Thu</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Nike-Jordan</td>
+                            <td><img src="" alt="" width="40" height="40"></td>
+                            <td>34</td>
+                            <td>Đỏ</td>
+                            <td>Nike</td>
+                            <td>6</td>
+                            <td>42.200.000</td>
+                        </tr>
+                        <tr>
+                            <td>Adidas-OG</td>
+                            <td><img src="" alt="" width="40" height="40"></td>
+                            <td>32</td>
+                            <td>Trắng</td>
+                            <td>Aidas</td>
+                            <td>10</td>
+                            <td>22.00.000</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>

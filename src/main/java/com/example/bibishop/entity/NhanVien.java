@@ -34,6 +34,7 @@ public class NhanVien extends SuperEntity {
 
   @Column(name = "mat_khau")
   private String matKhau;
+
   private String passwordRaw;
 
   @Column(name = "ngay_sinh")
@@ -63,4 +64,13 @@ public class NhanVien extends SuperEntity {
 
   @Column(name = "vai_tro")
   private int vaiTro;
+
+  public String getRoleAsString() {
+    switch (this.vaiTro) {
+      case 0: return "ROLE_ADMIN";
+      case 1: return "ROLE_SELLER";
+      case 2: return "ROLE_CUSTOMER";
+      default: return "ROLE_CUSTOMER"; // fallback
+    }
+  }
 }
