@@ -14,7 +14,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CreateNhanVienRequest {
-    private Integer  id;
+    private Integer id;
     private String email;
     private String sdt;
     private String firstName;

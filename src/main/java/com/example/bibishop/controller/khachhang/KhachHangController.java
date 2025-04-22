@@ -33,11 +33,10 @@ public class KhachHangController {
                                @RequestParam( required = false) String address,
                                @RequestParam(defaultValue = "1", required = false) Integer page) {
         Page<KhachHang> users = khachHangService.adminListUserPages(fullName, phone, email, page);
-        model.addAttribute("fragmentPath", "admin/khach-hang/list :: listKhachHang");
         model.addAttribute("list", users.getContent());
         model.addAttribute("totalPages", users.getTotalPages());
         model.addAttribute("currentPage", users.getPageable().getPageNumber() + 1);
-        return "admin/khach-hang/list";
+        return "admin/khachhang/list";
     }
 
 
@@ -49,7 +48,7 @@ public class KhachHangController {
     }
     @GetMapping("/create")
     public String showAddEmployeeForm(Model model) {
-        return "admin/khach-hang/create";
+        return "admin/khachhang/create";
     }
 
     @PostMapping("/create")
@@ -62,7 +61,7 @@ public class KhachHangController {
     public String showUpdateEmployeeForm(@PathVariable("id") Integer id, Model model) {
         KhachHang khachHang = khachHangService.getCustomerById(id);
         model.addAttribute("khachHang", khachHang);
-        return "admin/khach-hang/view";
+        return "admin/khachhang/view";
     }
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateCustomer(@PathVariable("id") Integer id, @RequestBody CreateKhachHangRequest request) {
