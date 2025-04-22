@@ -51,10 +51,13 @@
                             <td th:text="${item.id}"></td>
                             <td th:text="${item.ho + ' ' + item.tenDem + ' ' + item.ten}"></td>
                             <td th:text="${item.email}"></td>
-                            <td th:text="${item.vaiTro}"></td>
-                            <td th:text="${item.gioiTinh}"></td>
+                            <td th:text="${item.vaiTro== 0 ? 'Admin' : 'Staff'}"></td>
+                            <td th:text="${item.gioiTinh == 0 ? 'Nam' : 'Nữ'}"></td>
                             <td th:text="${item.sdt}"></td>
-                            <td><span class="badge badge-primary">Hoạt Động</span></td>
+                            <td th:switch="${item.trangThai}">
+                                <span th:case="0" class="badge badge-primary">Hoạt Động</span>
+                                <span th:case="1" class="badge badge-danger">Ngừng</span>
+                            </td>
                             <td>
                                 <a  class="btn btn-success  dim" th:href="@{/admin/nhanvien/{id}(id=${item.id})}" type="button"><i
                                         class="fa fa-eye"></i></a>
