@@ -33,6 +33,7 @@ public class KhachHangController {
                                @RequestParam( required = false) String address,
                                @RequestParam(defaultValue = "1", required = false) Integer page) {
         Page<KhachHang> users = khachHangService.adminListUserPages(fullName, phone, email, page);
+        model.addAttribute("fragmentPath", "admin/khach-hang/list :: listKhachHang");
         model.addAttribute("list", users.getContent());
         model.addAttribute("totalPages", users.getTotalPages());
         model.addAttribute("currentPage", users.getPageable().getPageNumber() + 1);
