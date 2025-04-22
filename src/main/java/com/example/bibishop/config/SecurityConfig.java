@@ -48,7 +48,7 @@ public class SecurityConfig {
 		daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
 		return daoAuthenticationProvider;
 	}
-
+//
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
@@ -96,6 +96,7 @@ public class SecurityConfig {
 							}
 						})
 						.loginPage("/login")
+						.defaultSuccessUrl("/index", true)
 				)
 				.logout(logout -> logout
 						.logoutSuccessHandler(new LogoutSuccessHandler() {

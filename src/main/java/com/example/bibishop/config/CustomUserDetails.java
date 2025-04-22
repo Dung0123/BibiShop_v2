@@ -36,6 +36,7 @@ public class CustomUserDetails implements UserDetails {
     return user.getEmail();
   }
 // if have bug in here, please change from String to int okay:))))
+
   public int getVaiTro() {
     return user.getVaiTro();
 

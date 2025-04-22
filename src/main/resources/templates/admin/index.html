@@ -1,25 +1,19 @@
 <!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <th:block th:replace="fragments/head :: head"></th:block>
+    <th:block th:replace="~{fragments/head :: head}"></th:block>
 </head>
 <body>
-<?php $fragmentPath = null >
 <div id="wrapper">
-  <th:block th:replace="fragments/sidebar :: sidebar"></th:block>
-  <div id="page-wrapper" class="gray-bg">
-    <th:block th:replace="fragments/filter :: filter"></th:block>
-
-    <th:block th:if="${!#strings.isEmpty(fragmentPath)}" th:replace="~{fragmentPath}"></th:block>
-
-    <th:block th:if="${#strings.isEmpty(fragmentPath)}" th:replace="admin/thongke/satistical :: satistical"></th:block>
-
-    <th:block th:replace="fragments/footer :: footer"></th:block>
-  </div>
-
+    <th:block th:replace="~{fragments/sidebar :: sidebar}"></th:block>
+    <div id="page-wrapper" class="gray-bg">
+        <th:block th:replace="~{fragments/filter :: filter}"></th:block>
+        <th:block th:replace="~{admin/thongke/satistical :: satistical}"></th:block>
+        <th:block th:replace="~{fragments/footer :: footer}"></th:block>
+    </div>
 </div>
 <script th:src="@{/js/plugin-scripts.js}"></script>
 </body>
 </html>
 
-<!--<h1>Hello</h1>-->
+
