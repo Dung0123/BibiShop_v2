@@ -3,11 +3,13 @@ package com.example.bibishop.controller.nhanvien;
 //import com.poly.admin.config.exeption.BadRequestException;
 
 
+import com.example.bibishop.dto.ResponseMessage;
 import com.example.bibishop.dto.admin.CreateNhanVienRequest;
 import com.example.bibishop.entity.NhanVien;
 import com.example.bibishop.service.NhanVienService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,11 +49,17 @@ public class NhanVienController {
 
     }
 
-    @PostMapping("/create")
-    public String addEmployee(@RequestBody CreateNhanVienRequest request) {
-        NhanVien nhanVien = nhanVienService.saveEmployee(request);
-        return "redirect:/admin/nhanvien/list";
+    @PostMapping("/add")
+    public ResponseEntity<?> addEmployee(@RequestBody CreateNhanVienRequest request) {
+        try {
+            NhanVien nhanVien = nhanVienService.saveEmployee(request);
+            return ResponseEntity.ok().body(new ResponseMessage("Thêm nhân viên thành công", true)); // Trả về thông báo và success
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseMessage("Có lỗi xảy ra khi thêm nhân viên", false)); // Trả về thông báo lỗi
+        }
     }
+
+
 
     @GetMapping("/{id}")
     public String showUpdateEmployeeForm(@PathVariable("id") Integer id, Model model) {

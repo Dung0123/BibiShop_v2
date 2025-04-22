@@ -48,7 +48,7 @@ public class KhachHangController {
     }
     @GetMapping("/create")
     public String showAddEmployeeForm(Model model) {
-        return "admin/khachhang/create";
+        return "admin/khachhang/add";
     }
 
     @PostMapping("/create")
@@ -61,7 +61,7 @@ public class KhachHangController {
     public String showUpdateEmployeeForm(@PathVariable("id") Integer id, Model model) {
         KhachHang khachHang = khachHangService.getCustomerById(id);
         model.addAttribute("khachHang", khachHang);
-        return "admin/khachhang/view";
+        return "admin/khachhang/update";
     }
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateCustomer(@PathVariable("id") Integer id, @RequestBody CreateKhachHangRequest request) {
