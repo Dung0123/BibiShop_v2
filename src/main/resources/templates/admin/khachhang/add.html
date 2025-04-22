@@ -8,7 +8,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                  <div class="ibox-title">
-                <h5>Thêm Nhân Viên</h5>
+                <h5>Thêm Khách Hàng</h5>
                 <div class="ibox-tools">
                     <a class="collapse-link">
                         <i class="fa fa-chevron-up"></i>
@@ -21,69 +21,49 @@
                 <div class="ibox-content">
                     <div class="row">
                         <div class="col-lg-12">
-                            <form role="form" id="employeeForm">
-                                <div class="row">
-                                    <div class="col-sm-6 b-r">
-                                        <div class="form-group">
-                                            <label>Email <span style="color: red">*</span></label>
-                                            <input type="email" class="form-control" id="email" placeholder="Nhập email"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Họ <span style="color: red">*</span></label>
-                                            <input type="text" class="form-control" id="firstName" placeholder="Nhập họ"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Tên Đệm</label>
-                                            <input type="text" class="form-control" id="midName" placeholder="Nhập tên đệm"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Tên <span style="color: red">*</span></label>
-                                            <input type="text" class="form-control" id="name" placeholder="Nhập tên"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <!--                      <label>Số Điện Thoại <span style="color: red">*</span></label>-->
-                                            <input type="text" class="form-control" id="sdt" placeholder="Nhập số điện thoại"/>
-                                        </div>
+                            <form role="form">
+                                <div class="col-sm-6 b-r">
+                                    <div class="form-group"><label>Email</label>
+                                        <input type="email" placeholder="Enter email" class="form-control">
                                     </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label>Ngày Sinh <span style="color: red">*</span></label>
-                                            <input type="date" class="form-control" id="dob"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Mật khẩu <span style="color: red">*</span></label>
-                                            <input type="password" class="form-control" id="password" placeholder="Nhập mật khẩu"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Vị trí công việc <span style="color: red">*</span></label>
-                                            <select class="form-control" id="position">
-                                                <option value="">Chọn vị trí</option>
-                                                <option value="1">Admin</option>
-                                                <option value="2">Nhân viên</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Trạng Thái <span style="color: red">*</span></label>
-                                            <select class="form-control" id="trangThai">
-                                                <option value="">Chọn trạng thái</option>
-                                                <option value="1">Hoạt động</option>
-                                                <option value="0">Không hoạt động</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Giới Tính <span style="color: red">*</span></label>
-                                            <select class="form-control" id="gender">
-                                                <option value="">Chọn giới tính</option>
-                                                <option value="Nam">Nam</option>
-                                                <option value="Nữ">Nữ</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-sm-12 text-right">
-                                                <a th:href="@{/admin/nhanvien/list}" class="btn btn-white">Hủy</a>
-                                                <button type="button" class="btn btn-primary btn-create-promotion">Thêm</button>
-                                            </div>
-                                        </div>
+
+                                    <div class="form-group"><label>Họ
+                                    </label>
+                                        <input type="text" placeholder="Họ" class="form-control">
+                                    </div>
+                                    <div class="form-group"><label>Tên Đệm
+                                    </label>
+                                        <input type="text" placeholder="Tên đệm" class="form-control">
+                                    </div>
+                                    <div class="form-group"><label>Tên
+                                    </label>
+                                        <input type="text" placeholder="Tên" class="form-control">
+                                    </div>
+                                    <div class="form-group"><label>Số Điện Thoại</label>
+                                        <input type="text" placeholder="Phone" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group"><label>Ngày Sinh
+                                    </label>
+                                        <input type="date" class="form-control">
+                                    </div>
+                                    <div class="form-group"><label>Role</label>
+                                        <input type="text" placeholder="Role" class="form-control">
+                                    </div>
+                                    <div class="form-group"><label>Trạng Thái
+                                    </label>
+                                        <input type="tex" placeholder="Status" class="form-control">
+                                    </div>
+                                    <div class="form-group"><label>Địa Chỉ</label>
+                                        <input type="text" placeholder="Address" class="form-control">
+                                    </div>
+
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="col-sm-3 col-sm-offset-2 pull-right">
+                                        <button class="btn btn-primary" type="submit">Thêm</button>
+                                        <button class="btn btn-white" type="submit">Hủy</button>
                                     </div>
                                 </div>
                             </form>

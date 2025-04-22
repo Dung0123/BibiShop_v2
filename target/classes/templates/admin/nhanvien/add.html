@@ -7,17 +7,13 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
-                 <div class="ibox-title">
-                <h5>Thêm Nhân Viên</h5>
-                <div class="ibox-tools">
-                    <a class="collapse-link">
-                        <i class="fa fa-chevron-up"></i>
-                    </a>
-                    <a class="close-link">
-                        <i class="fa fa-times"></i>
-                    </a>
+                <div class="ibox-title">
+                    <h5>Thêm Nhân Viên</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        <a class="close-link"><i class="fa fa-times"></i></a>
+                    </div>
                 </div>
-            </div>
                 <div class="ibox-content">
                     <div class="row">
                         <div class="col-lg-12">
@@ -26,61 +22,71 @@
                                     <div class="col-sm-6 b-r">
                                         <div class="form-group">
                                             <label>Email <span style="color: red">*</span></label>
-                                            <input type="email" class="form-control" id="email" placeholder="Nhập email"/>
+                                            <input name="email" type="email" class="form-control" id="email" placeholder="Nhập email"/>
+                                            <div class="invalid-feedback" id="invalid-feedback-email" style="color: red; display: none;">Email không hợp lệ.</div>
                                         </div>
                                         <div class="form-group">
                                             <label>Họ <span style="color: red">*</span></label>
-                                            <input type="text" class="form-control" id="firstName" placeholder="Nhập họ"/>
+                                            <input name="firstName" type="text" class="form-control" id="firstName" placeholder="Nhập họ"/>
+                                            <div class="invalid-feedback" id="invalid-feedback-firstName" style="color: red; display: none;">Họ không được để trống.</div>
                                         </div>
                                         <div class="form-group">
                                             <label>Tên Đệm</label>
-                                            <input type="text" class="form-control" id="midName" placeholder="Nhập tên đệm"/>
-                                        </div>
+                                            <input name="midName" type="text" class="form-control" id="midName" placeholder="Nhập tên đệm"/>
+                                            <div class="invalid-feedback" id="invalid-feedback-midName" style="color: red; display: none;">Tên đệm không được để trống.</div>
+                                       </div>
                                         <div class="form-group">
                                             <label>Tên <span style="color: red">*</span></label>
-                                            <input type="text" class="form-control" id="name" placeholder="Nhập tên"/>
+                                            <input name="name"  type="text" class="form-control" id="name" placeholder="Nhập tên"/>
+                                            <div class="invalid-feedback" id="invalid-feedback-name" style="color: red; display: none;">Tên không được để trống.</div>
                                         </div>
                                         <div class="form-group">
                                             <label>Số Điện Thoại <span style="color: red">*</span></label>
-                                            <input type="text" class="form-control" id="sdt" placeholder="Nhập số điện thoại"/>
+                                            <input name="sdt" type="text" class="form-control" id="sdt" placeholder="Nhập số điện thoại"/>
+                                            <div class="invalid-feedback" id="invalid-feedback-sdt" style="color: red; display: none;">Số điện thoại không hợp lệ.</div>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label>Ngày Sinh <span style="color: red">*</span></label>
-                                            <input type="date" class="form-control" id="dob"/>
+                                            <input name="dob" type="date" class="form-control" id="dob"/>
+                                            <div class="invalid-feedback" id="invalid-feedback-dob" style="color: red; display: none;">Ngày sinh không được để trống.</div>
                                         </div>
                                         <div class="form-group">
                                             <label>Mật khẩu <span style="color: red">*</span></label>
-                                            <input type="password" class="form-control" id="password" placeholder="Nhập mật khẩu"/>
+                                            <input name="password" type="password" class="form-control" id="password" placeholder="Nhập mật khẩu"/>
+                                            <div class="invalid-feedback" id="invalid-feedback-password" style="color: red; display: none;">Mật khẩu không được để trống.</div>
                                         </div>
                                         <div class="form-group">
                                             <label>Vị trí công việc <span style="color: red">*</span></label>
-                                            <select class="form-control" id="position">
+                                            <select name="position" class="form-control" id="position">
                                                 <option value="">Chọn vị trí</option>
                                                 <option value="1">Admin</option>
                                                 <option value="2">Nhân viên</option>
                                             </select>
+                                            <div class="invalid-festatusedback" id="invalid-feedback-position" style="color: red; display: none;">Vui lòng chọn vị trí công việc.</div>
                                         </div>
                                         <div class="form-group">
                                             <label>Trạng Thái <span style="color: red">*</span></label>
-                                            <select class="form-control" id="trangThai">
+                                            <select name="status"  class="form-control" id="trangThai">
                                                 <option value="">Chọn trạng thái</option>
                                                 <option value="1">Hoạt động</option>
                                                 <option value="0">Không hoạt động</option>
                                             </select>
+                                            <div class="invalid-feedback" id="invalid-feedback-trangThai" style="color: red; display: none;">Vui lòng chọn trạng thái.</div>
                                         </div>
                                         <div class="form-group">
                                             <label>Giới Tính <span style="color: red">*</span></label>
-                                            <select class="form-control" id="gender">
+                                            <select name="gender" class="form-control" id="gender">
                                                 <option value="">Chọn giới tính</option>
                                                 <option value="Nam">Nam</option>
                                                 <option value="Nữ">Nữ</option>
                                             </select>
+                                            <div class="invalid-feedback" id="invalid-feedback-gender" style="color: red; display: none;">Vui lòng chọn giới tính.</div>
                                         </div>
                                         <div class="form-group">
                                             <div class="col-sm-12 text-right">
-                                                <button type="button" class="btn btn-primary btn-create-promotion">Thêm</button>
+                                                <button id="btnAddEmployee" type="button" class="btn btn-primary btn-create-button">Thêm</button>
                                                 <a th:href="@{/admin/nhanvien/list}" class="btn btn-white">Hủy</a>
                                             </div>
                                         </div>
@@ -89,132 +95,163 @@
                             </form>
                         </div>
                     </div>
+                    <div class="modal inmodal in" id="myModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none; padding-right: 15px;">
+                        <div class="modal-dialog">
+                            <div class="modal-content animated bounceInRight">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                    <i class="fa fa-laptop modal-icon"></i>
+                                    <h4 class="modal-title">Xác nhận thông tin</h4>
+                                    <small class="font-bold">Bạn có chắc chắn muốn thêm nhân viên?</small>
+                                </div>
+                                <div class="modal-body">
+                                    <p><strong>Thông tin nhân viên</strong> sẽ được xác nhận khi bạn bấm "Lưu".</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-white" data-dismiss="modal">Đóng</button>
+                                    <button type="button" class="btn btn-primary" id="saveChangesButton">Lưu thay đổi</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script th:src="@{/shop/toastr/toastr.min.js}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
-<script th:inline="javascript">
-    $(document).ready(function () {
-        $('.invalid-feedback').hide();
-
-        $('.btn-create-promotion').click(function () {
-            let email = $('#email').val();
-            let sdt = $('#sdt').val();
-            let firstName = $('#firstName').val();
-            let name = $('#name').val();
-            let midName = $('#midName').val();
-            let dob = $('#dob').val();
-            let password = $('#password').val();
-            let position = $('#position').val();
-            let status = $('#trangThai').val();
-            let gender = $('#gender').val();
-
-            let isValid = true;
-
-            let emailRegex = /^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$/;
-            if (!email || !emailRegex.test(email)) {
-                $('#invalid-feedback-email').show();
-                isValid = false;
-            } else {
-                $('#invalid-feedback-email').hide();
-            }
-
-            let phoneRegex = /^0\d{9}$/;
-            if (!sdt || !phoneRegex.test(sdt)) {
-                $('#invalid-feedback-sdt').show();
-                isValid = false;
-            } else {
-                $('#invalid-feedback-sdt').hide();
-            }
-
-            if (!firstName) {
-                $('#invalid-feedback-firstName').show();
-                isValid = false;
-            } else {
-                $('#invalid-feedback-firstName').hide();
-            }
-
-            if (!name) {
-                $('#invalid-feedback-name').show();
-                isValid = false;
-            } else {
-                $('#invalid-feedback-name').hide();
-            }
-
-            if (!dob) {
-                $('#invalid-feedback-dob').show();
-                isValid = false;
-            } else {
-                $('#invalid-feedback-dob').hide();
-            }
-
-            if (!password) {
-                $('#invalid-feedback-password').show();
-                isValid = false;
-            } else {
-                $('#invalid-feedback-password').hide();
-            }
-
-            if (!position) {
-                $('#invalid-feedback-position').show();
-                isValid = false;
-            } else {
-                $('#invalid-feedback-position').hide();
-            }
-
-            if (!status) {
-                $('#invalid-feedback-trangThai').show();
-                isValid = false;
-            } else {
-                $('#invalid-feedback-trangThai').hide();
-            }
-
-            if (!gender) {
-                $('#invalid-feedback-gender').show();
-                isValid = false;
-            } else {
-                $('#invalid-feedback-gender').hide();
-            }
-
-            if (isValid) {
-                let req = {
-                    email: email,
-                    sdt: sdt,
-                    firstName: firstName,
-                    midName: midName,
-                    name: name,
-                    dob: dob,
-                    password: password,
-                    position: position,
-                    status: parseInt(status),
-                    gender: gender
-                };
-
-                $.ajax({
-                    url: '/admin/nhanvien/create',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify(req),
-                    success: function (data) {
-                        toastr.success("Tạo nhân viên thành công");
-                        setTimeout(function () {
-                            location.href = "/admin/nhanvien/list";
-                        }, 1000);
-                    },
-                    error: function (error) {
-                        toastr.error(error.responseJSON.message || "Tạo nhân viên thất bại");
-                    }
-                });
-            }
-        });
-    });
-</script>
-
 
 </body>
 </html>
+<script>
+    document.getElementById('btnAddEmployee').addEventListener('click', function () {
+        $('#myModal').modal('show');
+    });
+
+    document.getElementById('saveChangesButton').addEventListener('click', function (event) {
+        event.preventDefault();; // Ngăn chặn form gửi mặc định
+
+        // Lấy dữ liệu từ form
+        const email = document.getElementById('email').value;
+        const firstName = document.getElementById('firstName').value;
+        const midName = document.getElementById('midName').value;
+        const name = document.getElementById('name').value;
+        const sdt = document.getElementById('sdt').value;
+        const dob = document.getElementById('dob').value;
+        const password = document.getElementById('password').value;
+        const position = document.getElementById('position').value;
+        const status = document.getElementById('trangThai').value;
+        const gender = document.getElementById('gender').value;
+
+        // Kiểm tra tính hợp lệ của form
+        let isValid = true;
+
+        if (!email) {
+            document.getElementById('invalid-feedback-email').style.display = 'block';
+            isValid = false;
+        } else {
+            document.getElementById('invalid-feedback-email').style.display = 'none';
+        }
+
+        if (!firstName) {
+            document.getElementById('invalid-feedback-firstName').style.display = 'block';
+            isValid = false;
+        } else {
+            document.getElementById('invalid-feedback-firstName').style.display = 'none';
+        }
+
+        if (!midName) {
+            document.getElementById('invalid-feedback-midName').style.display = 'block';
+            isValid = false;
+        } else {
+            document.getElementById('invalid-feedback-midName').style.display = 'none';
+        }
+
+        if (!name) {
+            document.getElementById('invalid-feedback-name').style.display = 'block';
+            isValid = false;
+        } else {
+            document.getElementById('invalid-feedback-name').style.display = 'none';
+        }
+
+        if (!sdt) {
+            document.getElementById('invalid-feedback-sdt').style.display = 'block';
+            isValid = false;
+        } else {
+            document.getElementById('invalid-feedback-sdt').style.display = 'none';
+        }
+
+        if (!dob) {
+            document.getElementById('invalid-feedback-dob').style.display = 'block';
+            isValid = false;
+        } else {
+            document.getElementById('invalid-feedback-dob').style.display = 'none';
+        }
+
+        if (!password) {
+            document.getElementById('invalid-feedback-password').style.display = 'block';
+            isValid = false;
+        } else {
+            document.getElementById('invalid-feedback-password').style.display = 'none';
+        }
+
+        if (!position) {
+            document.getElementById('invalid-feedback-position').style.display = 'block';
+            isValid = false;
+        } else {
+            document.getElementById('invalid-feedback-position').style.display = 'none';
+        }
+
+        if (!status) {
+            document.getElementById('invalid-feedback-trangThai').style.display = 'block';
+            isValid = false;
+        } else {
+            document.getElementById('invalid-feedback-trangThai').style.display = 'none';
+        }
+
+        if (!gender) {
+            document.getElementById('invalid-feedback-gender').style.display = 'block';
+            isValid = false;
+        } else {
+            document.getElementById('invalid-feedback-gender').style.display = 'none';
+        }
+
+        if (isValid) {
+            const formData = {
+                email: email,
+                firstName: firstName,
+                midName: midName,
+                name: name,
+                sdt: sdt,
+                dob: dob,
+                password: password,
+                position: position,
+                status: status,
+                gender: gender
+            };
+
+            fetch('/admin/nhanvien/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        toastr.success('Thêm nhân viên thành công', 'Thông báo');
+                        setTimeout(function () {
+                            window.location.href = '/admin/nhanvien/list';
+                        }, 2000);
+                    } else {
+                        toastr.error('Có lỗi xảy ra: ' + data.message, 'Lỗi');
+                    }
+                })
+                .catch(error => {
+                    console.error('Có lỗi xảy ra:', error);
+                    toastr.error('Đã có lỗi khi gửi dữ liệu.', 'Lỗi');
+                });
+        }
+    });
+
+</script>

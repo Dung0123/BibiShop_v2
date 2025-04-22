@@ -40,7 +40,7 @@ public class Dotgiamgiacontroller {
   public String viewAndUpdateDotGiamGia(@PathVariable int id, Model model) {
     dotGiamGiaRepository.findById((long) id).ifPresent(dotGiamGia ->
         model.addAttribute("updateDotGiamGia", dotGiamGia));
-    return "admin/DotGiamGia/viewAndUpdate";
+    return "update";
   }
 
   @GetMapping("dotgiamgia/add")

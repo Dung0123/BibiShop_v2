@@ -40,8 +40,10 @@
                             <th>Tên</th>
                             <th>Email</th>
                             <th>Role</th>
-                            <th>Giới Tính</th>
                             <th>SĐT</th>
+                            <th>Địa Chỉ</th>
+                            <th>Ngày Sinh</th>
+                            <th>Giới Tính</th>
                             <th>Trạng Thái</th>
                             <th>Action</th>
                         </tr>
@@ -51,15 +53,17 @@
                             <td th:text="${item.id}"></td>
                             <td th:text="${item.ho + ' ' + item.tenDem + ' ' + item.ten}"></td>
                             <td th:text="${item.email}"></td>
-                            <td th:text="${item.vaiTro== 0 ? 'Admin' : 'Staff'}"></td>
-                            <td th:text="${item.gioiTinh == 0 ? 'Nam' : 'Nữ'}"></td>
+                            <td th:text="${item.vaiTro}"></td>
                             <td th:text="${item.sdt}"></td>
+                            <td th:text="${item.address}"></td>
+                            <td th:text="${item.ngaySinh}"></td>
+                            <td th:text="${item.gioiTinh == 0 ? 'Nam' : 'Nữ'}"></td>
                             <td th:switch="${item.trangThai}">
                                 <span th:case="0" class="badge badge-primary">Hoạt Động</span>
                                 <span th:case="1" class="badge badge-danger">Ngừng</span>
                             </td>
                             <td>
-                                <a  class="btn btn-success  dim" th:href="@{/admin/nhanvien/{id}(id=${item.id})}" type="button"><i
+                                <a  class="btn btn-success  dim" th:href="@{/admin/khachhang/{id}(id=${item.id})}" type="button"><i
                                         class="fa fa-eye"></i></a>
                                 <a  class="btn btn-danger  dim " type="button"><i
                                         class="fa fa-trash-o"></i></a>
