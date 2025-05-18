@@ -21,10 +21,17 @@ import lombok.ToString;
 @Builder
 public class KichCoEntity extends SuperEntity {
 
-    @Column(name = "tenKichCo", length = 120, nullable = false)
+    @Column(name = "tenKichCo", length = 120, nullable = false,columnDefinition = "NVARCHAR(255)")
     private String tenKichCo;
-    @Column(name = "doDai", length = 150, nullable = false)
-    private String doDai;
+//    @Column(name = "doDai", length = 150, nullable = false,columnDefinition = "NVARCHAR(255)")
+//    private String doDai;
+
+    @Column(name = "doDai", length = 150, nullable = false, columnDefinition = "NVARCHAR(255) DEFAULT ''")
+    private String doDai = "";
+
+    @Column(name = "trang_thai", length = 10, nullable = false)
+    private int trangThai;
+
     @JsonIgnore
     @OneToMany(mappedBy = "kichCo")
     @ToString.Exclude

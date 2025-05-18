@@ -29,7 +29,7 @@
         @Column(name = "trongLuong", length = 150, nullable = false)
         private String trongLuong;
         @Column(name = "gioiTinh", length = 10, nullable = false)
-        private int gioiTinh;
+        private String gioiTinh;
         @Column(name = "moTa", length = 150, nullable = false)
         private String moTa;
         @Transient

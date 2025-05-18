@@ -6,9 +6,14 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
+@EnableJpaRepositories(basePackages = {
+		"com.example.bibishop.repository",
+		"com.example.bibishop.sanpham.repository"  // lưu ý tên phải khớp chính xác
+})
 public class BibishopDatnApplication {
 
 	@Autowired

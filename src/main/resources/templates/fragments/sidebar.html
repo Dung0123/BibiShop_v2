@@ -24,7 +24,7 @@
                 </div>
             </li>
             <li>
-                <a href="layouts.html"><i class="fa fa-diamond"></i> <span class="nav-label">Bán hàng tại
+                <a th:href="@{/buyAtTheCounter}"><i class="fa fa-diamond"></i> <span class="nav-label">Bán hàng tại
                                 quầy</span></a>
             </li>
             <li class="active">
@@ -45,7 +45,7 @@
                 <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Quản lý giảm
                                 giá</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
-                    <li><a href="graph_flot.html">Phiếu giảm giá</a></li>
+                    <li><a th:href="@{/admin/MaGiamGia/list}">Phiếu giảm giá</a></li>
                     <li><a href="graph_morris.html">Đợt giảm giá</a></li>
                 </ul>
             </li>

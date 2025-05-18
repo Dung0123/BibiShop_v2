@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html layout:decorate="~{admin/layout}" lang="vi" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<body>
+<div class="wrapper wrapper-content" layout:fragment="content">
+      <div class="wrapper wrapper-content">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+              <div class="ibox-title">
+                <h5>Thêm Mã Giảm Giá</h5>
+              </div>
+              <div class="ibox-content">
+                <!-- Server-side messages -->
+                <div th:if="${message}" class="alert" th:classappend="${messageType == 'success' ? 'alert-success' : 'alert-danger'}">
+                  <span th:text="${message}"></span>
+                </div>
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="tabs-container">
+                      <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">Giảm Theo Phần Trăm</a></li>
+                        <li><a data-toggle="tab" href="#tab-2" aria-expanded="false">Giảm Theo Giá Trị</a></li>
+                      </ul>
+                      <div class="tab-content">
+                        <!-- Percentage Discount Form -->
+                        <div id="tab-1" class="tab-pane active">
+                          <div class="panel-body">
+                            <div class="col-lg-12">
+                              <div class="ibox float-e-margins">
+                                <div class="row">
+                                  <form th:action="@{/admin/MaGiamGia/add/percentage}" th:object="${percentageDiscount}" method="post" role="form">
+                                    <div class="col-sm-6 b-r">
+                                      <div class="form-group">
+                                        <label>Tên Mã Giảm Giá</label>
+                                        <input type="text" class="form-control" id="tenPercentage" th:field="*{ten}" required>
+                                        <span class="error-message" id="tenPercentageError"></span>
+                                      </div>
+                                      <div class="form-group">
+                                        <label>Mã Giảm Giá (Tùy Chọn)</label>
+                                        <input type="text" class="form-control" id="maPercentage" th:field="*{ma}">
+                                        <span class="error-message" id="maPercentageError"></span>
+                                      </div>
+                                      <div class="form-group">
+                                        <label>Phần Trăm Giảm</label>
+                                        <input type="number" class="form-control" id="phanTramGiam" th:field="*{phanTramGiam}" required min="1" max="100">
+                                        <span class="error-message" id="phanTramGiamError"></span>
+                                      </div>
+                                      <div class="form-group">
+                                        <label>Giá Trị Giảm Tối Đa</label>
+                                        <input type="number" class="form-control" id="giamToiDa" th:field="*{giamToiDa}" required min="100">
+                                        <span class="error-message" id="giamToiDaError"></span>
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                      <div class="form-group">
+                                        <label>Số Lượng</label>
+                                        <input type="number" class="form-control" id="soLuongPercentage" th:field="*{soLuong}" required min="1">
+                                        <span class="error-message" id="soLuongPercentageError"></span>
+                                      </div>
+                                      <div class="form-group">
+                                        <label>Ngày Bắt Đầu</label>
+                                        <input type="date" class="form-control" id="ngayBatDauPercentage" th:field="*{ngayBatDau}" required>
+                                        <span class="error-message" id="ngayBatDauPercentageError"></span>
+                                      </div>
+                                      <div class="form-group">
+                                        <label>Ngày Kết Thúc</label>
+                                        <input type="date" class="form-control" id="ngayKetThucPercentage" th:field="*{ngayKetThuc}" required>
+                                        <span class="error-message" id="ngayKetThucPercentageError"></span>
+                                      </div>
+                                      <div class="form-group">
+                                        <div class="col-sm-4 col-sm-offset-2">
+                                          <button class="btn btn-primary" type="submit" id="submitPercentage"
+                                                  onclick="return confirm('Bạn có chắc chắn muốn thêm không?')">Thêm</button>
+                                          <a th:href="@{/admin/MaGiamGia/list}" class="btn btn-white">Hủy</a>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Value Discount Form -->
+                        <div id="tab-2" class="tab-pane">
+                          <div class="panel-body">
+                            <div class="col-lg-12">
+                              <div class="ibox float-e-margins">
+                                <div class="row">
+                                  <form th:action="@{/admin/MaGiamGia/add/value}" th:object="${valueDiscount}" method="post" role="form">
+                                    <div class="col-sm-6 b-r">
+                                      <div class="form-group">
+                                        <label>Tên Mã Giảm Giá</label>
+                                        <input type="text" class="form-control" id="tenValue" th:field="*{ten}" required>
+                                        <span class="error-message" id="tenValueError"></span>
+                                      </div>
+                                      <div class="form-group">
+                                        <label>Mã Giảm Giá (Tùy Chọn)</label>
+                                        <input type="text" class="form-control" id="maValue" th:field="*{ma}">
+                                        <span class="error-message" id="maValueError"></span>
+                                      </div>
+                                      <div class="form-group">
+                                        <label>Giá Trị Giảm</label>
+                                        <input type="number" class="form-control" id="giaTriGiam" th:field="*{giaTriGiam}" required min="1">
+                                        <span class="error-message" id="giaTriGiamError"></span>
+                                      </div>
+                                      <div class="form-group">
+                                        <label>Giá Trị Đơn Tối Thiểu</label>
+                                        <input type="number" class="form-control" id="donToiThieu" th:field="*{donToiThieu}" required min="1">
+                                        <span class="error-message" id="donToiThieuError"></span>
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                      <div class="form-group">
+                                        <label>Số Lượng</label>
+                                        <input type="number" class="form-control" id="soLuongValue" th:field="*{soLuong}" required min="1">
+                                        <span class="error-message" id="soLuongValueError"></span>
+                                      </div>
+                                      <div class="form-group">
+                                        <label>Ngày Bắt Đầu</label>
+                                        <input type="date" class="form-control" id="ngayBatDauValue" th:field="*{ngayBatDau}" required>
+                                        <span class="error-message" id="ngayBatDauValueError"></span>
+                                      </div>
+                                      <div class="form-group">
+                                        <label>Ngày Kết Thúc</label>
+                                        <input type="date" class="form-control" id="ngayKetThucValue" th:field="*{ngayKetThuc}" required>
+                                        <span class="error-message" id="ngayKetThucValueError"></span>
+                                      </div>
+                                      <div class="form-group">
+                                        <div class="col-sm-4 col-sm-offset-2">
+                                          <button class="btn btn-primary" type="submit" id="submitValue">Thêm</button>
+                                          <a th:href="@{/admin/MaGiamGia/list}" class="btn btn-white">Hủy</a>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<script>
+
+
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const formConfigs = [
+      {
+        formId: "submitPercentage",
+        fields: {
+          ten: "tenPercentage",
+          phanTramGiam: "phanTramGiam",
+          giamToiDa: "giamToiDa",
+          soLuong: "soLuongPercentage",
+          ngayBatDau: "ngayBatDauPercentage",
+          ngayKetThuc: "ngayKetThucPercentage"
+        }
+      },
+      {
+        formId: "submitValue",
+        fields: {
+          ten: "tenValue",
+          giaTriGiam: "giaTriGiam",
+          donToiThieu: "donToiThieu",
+          soLuong: "soLuongValue",
+          ngayBatDau: "ngayBatDauValue",
+          ngayKetThuc: "ngayKetThucValue"
+        }
+      }
+    ];
+
+    formConfigs.forEach(config => {
+      const btn = document.getElementById(config.formId);
+      const fieldElements = {};
+
+      // Lưu input và span lỗi tương ứng
+      Object.entries(config.fields).forEach(([key, id]) => {
+        fieldElements[key] = {
+          input: document.getElementById(id),
+          error: document.getElementById(id + "Error")
+        };
+      });
+
+      const validateForm = () => {
+        let isValid = true;
+
+        // Reset lỗi
+        Object.values(fieldElements).forEach(({ error }) => {
+          error.textContent = "";
+        });
+
+        const getValue = (key) => fieldElements[key].input.value;
+
+        // Kiểm tra các field bắt buộc
+        ["ten", "soLuong", "ngayBatDau", "ngayKetThuc"].forEach(field => {
+          if (!getValue(field)) {
+            fieldElements[field].error.textContent = "Trường này là bắt buộc.";
+            isValid = false;
+          }
+        });
+
+        // Với tab percentage
+        if ("phanTramGiam" in fieldElements) {
+          const phanTram = parseInt(getValue("phanTramGiam"));
+          const giamToiDa = parseInt(getValue("giamToiDa"));
+          if (!phanTram || phanTram < 1 || phanTram > 100) {
+            fieldElements["phanTramGiam"].error.textContent = "Phần trăm phải từ 1 đến 100.";
+            isValid = false;
+          }
+          if (!giamToiDa || giamToiDa < 100) {
+            fieldElements["giamToiDa"].error.textContent = "Giá trị giảm tối đa phải từ 100.";
+            isValid = false;
+          }
+        }
+
+        // Với tab value
+        if ("giaTriGiam" in fieldElements) {
+          const giam = parseInt(getValue("giaTriGiam"));
+          const toiThieu = parseInt(getValue("donToiThieu"));
+          if (!giam || giam < 1) {
+            fieldElements["giaTriGiam"].error.textContent = "Giá trị giảm phải lớn hơn 0.";
+            isValid = false;
+          }
+          if (!toiThieu || toiThieu < 1) {
+            fieldElements["donToiThieu"].error.textContent = "Giá trị đơn tối thiểu phải lớn hơn 0.";
+            isValid = false;
+          }
+          if (giam > toiThieu) {
+            fieldElements["giaTriGiam"].error.textContent = "Giá trị giảm không được lớn hơn giá trị đơn tối thiểu.";
+            isValid = false;
+          }
+        }
+
+        // Kiểm tra ngày bắt đầu và kết thúc
+        const startDate = new Date(getValue("ngayBatDau"));
+        const endDate = new Date(getValue("ngayKetThuc"));
+        if (startDate > endDate) {
+          fieldElements["ngayKetThuc"].error.textContent = "Ngày kết thúc phải sau hoặc bằng ngày bắt đầu.";
+          isValid = false;
+        }
+
+        btn.disabled = !isValid;
+        return isValid;
+      };
+
+      // Bắt sự kiện thay đổi input để validate
+      Object.values(fieldElements).forEach(({ input }) => {
+        input.addEventListener("input", validateForm);
+        input.addEventListener("change", validateForm);
+      });
+
+      // Confirm khi submit
+      btn.closest("form").addEventListener("submit", function (e) {
+        if (!validateForm() || !confirm("Bạn có chắc chắn muốn thêm mã giảm giá này không?")) {
+          e.preventDefault();
+        }
+      });
+    });
+  });
+
+
+  document.getElementById("submitPercentage").addEventListener("click", function (e) {
+    e.preventDefault(); // Ngăn form tự submit
+    if (confirm("Bạn có chắc chắn muốn thêm không?")) {
+      // Kiểm tra validate
+      if (validateForm("percentage")) {
+        // Gọi hàm xử lý thêm
+        handleAddPercentage();
+      }
+    }
+  });
+
+  document.getElementById("submitAmount").addEventListener("click", function (e) {
+    e.preventDefault(); // Ngăn form tự submit
+    if (confirm("Bạn có chắc chắn muốn thêm không?")) {
+      if (validateForm("amount")) {
+        handleAddAmount();
+      }
+    }
+  });
+</script>
+</body>
+
+</html>

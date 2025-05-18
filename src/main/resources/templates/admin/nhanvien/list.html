@@ -59,22 +59,89 @@
                                 <span th:case="1" class="badge badge-danger">Ngừng</span>
                             </td>
                             <td>
-                                <a  class="btn btn-success  dim" th:href="@{/admin/nhanvien/{id}(id=${item.id})}" type="button"><i
-                                        class="fa fa-eye"></i></a>
-                                <a  class="btn btn-danger  dim " type="button"><i
-                                        class="fa fa-trash-o"></i></a>
+								<button class="btn btn-success dim btn-view" type="button" id="btn-delete"
+										th:attr="data-href=@{/admin/nhanvien/{id}(id=${item.id})}">
+									<i class="fa fa-eye"></i>
+								</button>
+
+							<button class="btn btn-danger dim btn-delete" type="button"
+										th:attr="data-id=${item.id}">
+									<i class="fa fa-trash-o"></i>
+								</button>
                             </td>
                         </tr>
                         </tbody>
                     </table>
-
                 </div>
             </div>
         </div>
     </div>
+    <div class="modal inmodal in" id="myModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none; padding-right: 15px;">
+        <div class="modal-dialog">
+            <div class="modal-content animated bounceInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                    <i class="fa fa-laptop modal-icon"></i>
+                    <h4 class="modal-title">Xác nhận thông tin</h4>
+                    <small class="font-bold">Bạn có chắc chắn muốn xóa nhân viên?</small>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Mọi thông tin nhân viên</strong> sẽ được xóa khi bạn bấm "Xác Nhận Xóa".</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" id="confirmButton">Xác Nhận Xóa</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<script >
+    $(function () {
+        // Lắng nghe click trên mọi .btn-view nằm trong <tbody>
+        $('tbody').on('click', '.btn-view', function () {
+            const url = $(this).data('href');   // lấy giá trị data-href
+            console.log('View URL:', url);      // kiểm tra trên console
+        });
+    });
+</script>
+<script th:inline="javascript">
+    let deleteId = null;
+
+    document.getElementById('btn-delete').addEventListener('click', function () {
+        $('#myModal').modal('show');
+    });
+    // $(document).ready(function () {
+    //     // Bắt sự kiện click nút Xóa
+    //     $('.btn-delete').click(function () {
+    //         deleteId = $(this).data('id');
+    //         $('#myModal').modal('show');
+    //     });
+    //
+    //     // Khi người dùng xác nhận xóa
+    //     $('#confirmButton').click(function () {
+    //         if (deleteId) {
+    //             $.ajax({
+    //                 url: '/admin/nhanvien/delete/' + deleteId,
+    //                 type: 'DELETE',
+    //                 success: function (response) {
+    //                     // Ẩn modal
+    //                     $('#myModal').modal('hide');
+    //
+    //                     // Xóa dòng tương ứng khỏi bảng
+    //                     $('button[data-id="' + deleteId + '"]').closest('tr').remove();
+    //
+    //                     // Reset lại deleteId
+    //                     deleteId = null;
+    //                 },
+    //                 error: function (xhr, status, error) {
+    //                     alert("Xảy ra lỗi khi xóa nhân viên.");
+    //                 }
+    //             });
+    //         }
+    //     });
+    // });
+</script>
 </div>
-
 </body>
-
 </html>
 

@@ -79,8 +79,8 @@
                                             <label>Giới Tính <span style="color: red">*</span></label>
                                             <select name="gender" class="form-control" id="gender">
                                                 <option value="">Chọn giới tính</option>
-                                                <option value="Nam">Nam</option>
-                                                <option value="Nữ">Nữ</option>
+                                                <option value="0">Nam</option>
+                                                <option value="1">Nữ</option>
                                             </select>
                                             <div class="invalid-feedback" id="invalid-feedback-gender" style="color: red; display: none;">Vui lòng chọn giới tính.</div>
                                         </div>
@@ -115,8 +115,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div
     </div>
 </div>
 
@@ -128,9 +127,9 @@
     });
 
     document.getElementById('saveChangesButton').addEventListener('click', function (event) {
-        event.preventDefault();; // Ngăn chặn form gửi mặc định
+        event.preventDefault();;
 
-        // Lấy dữ liệu từ form
+        // Lấy dữ liệu từ form tạo obj tương đương createNhanVienRequest
         const email = document.getElementById('email').value;
         const firstName = document.getElementById('firstName').value;
         const midName = document.getElementById('midName').value;
@@ -142,7 +141,7 @@
         const status = document.getElementById('trangThai').value;
         const gender = document.getElementById('gender').value;
 
-        // Kiểm tra tính hợp lệ của form
+        // validation form
         let isValid = true;
 
         if (!email) {
@@ -253,5 +252,4 @@
                 });
         }
     });
-
 </script>
