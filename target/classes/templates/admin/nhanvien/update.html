@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html layout:decorate="~{admin/layout}" lang="vi" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Chi Tiết và Cập Nhật Thông Tin Nhân Viên</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        .invalid-feedback {
+            display: none;
+            color: red;
+        }
+        .required-label::after {
+            content: '*';
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper wrapper-content" layout:fragment="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Chi Tiết và Cập Nhật Thông Tin Nhân Viên</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form role="form" id="employeeForm">
+                                <div class="row">
+                                    <div class="col-sm-6 b-r">
+                                        <input type="hidden" id="nhanVienId" th:value="${nhanVien.id}" />
+                                        <div class="form-group">
+                                            <label class="required-label">Email</label>
+                                            <input type="email" class="form-control" id="email" th:value="${nhanVien.email}"/>
+                                            <span class="invalid-feedback" id="invalid-feedback-email">Email không hợp lệ</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="required-label">Họ</label>
+                                            <input type="text" class="form-control" id="firstName" th:value="${nhanVien.ho}"/>
+                                            <span class="invalid-feedback" id="invalid-feedback-firstName">Họ không được để trống</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Tên Đệm</label>
+                                            <input type="text" class="form-control" id="midName" th:value="${nhanVien.tenDem}"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="required-label">Tên</label>
+                                            <input type="text" class="form-control" id="name" th:value="${nhanVien.ten}"/>
+                                            <span class="invalid-feedback" id="invalid-feedback-name">Tên không được để trống</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="required-label">Số Điện Thoại</label>
+                                            <input type="text" class="form-control" id="sdt" th:value="${nhanVien.sdt}"/>
+                                            <span class="invalid-feedback" id="invalid-feedback-sdt">Số điện thoại không hợp lệ</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="required-label">Ngày Sinh</label>
+                                            <input type="date" class="form-control" id="dob" th:value="${#dates.format(nhanVien.ngaySinh, 'yyyy-MM-dd')}"/>
+                                            <span class="invalid-feedback" id="invalid-feedback-dob">Ngày sinh không hợp lệ</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="required-label">Vị trí công việc</label>
+                                            <select class="form-control" id="position">
+                                                <option value="1" th:selected="${nhanVien.vaiTro == '1'}">Admin</option>
+                                                <option value="2" th:selected="${nhanVien.vaiTro == '2'}">Nhân viên</option>
+                                            </select>
+                                            <span class="invalid-feedback" id="invalid-feedback-position">Vị trí không được để trống</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="required-label">Trạng Thái</label>
+                                            <select class="form-control" id="trangThai">
+                                                <option value="1" th:selected="${nhanVien.trangThai == 1}">Hoạt động</option>
+                                                <option value="0" th:selected="${nhanVien.trangThai == 0}">Không hoạt động</option>
+                                            </select>
+                                            <span class="invalid-feedback" id="invalid-feedback-trangThai">Trạng thái không được để trống</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="required-label">Giới Tính</label>
+                                            <select class="form-control" id="gender">
+                                                <option value="Nam" th:selected="${nhanVien.gioiTinh == 'Nam'}">Nam</option>
+                                                <option value="Nữ" th:selected="${nhanVien.gioiTinh == 'Nữ'}">Nữ</option>
+                                            </select>
+                                            <span class="invalid-feedback" id="invalid-feedback-gender">Giới tính không được để trống</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-12 text-right">
+                                                <a th:href="@{/admin/nhanvien/list}" class="btn btn-white">Hủy</a>
+                                                <button type="button" class="btn btn-primary btn-update-promotion">Cập Nhật</button>
+                                                <button type="button" class="btn btn-danger btn-delete-promotion">Xóa</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script th:inline="javascript">
+            $('.btn-update-promotion').click(function () {
+                Swal.fire({
+                    title: 'Bạn có chắc muốn cập nhật thông tin nhân viên?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Có, cập nhật',
+                    cancelButtonText: 'Hủy bỏ'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        let id = $('#nhanVienId').val();
+                        let email = $('#email').val();
+                        let sdt = $('#sdt').val();
+                        let name = $('#name').val();
+                        let midName = $('#midName').val();
+                        let dob = $('#dob').val();
+                        let position = $('#position').val();
+                        let status = $('#trangThai').val();
+                        let gender = $('#gender').val();
+                        let firstName = $('#firstName').val();
+                        let isValid = true;
+
+                        // Reset thông báo lỗi
+                        $('.invalid-feedback').hide();
+
+                        let regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+                        if (email.length === 0 || !regex.test(email)) {
+                            $('#invalid-feedback-email').show();
+                            isValid = false;
+                        }
+
+                        if (sdt.length === 0) {
+                            $('#invalid-feedback-sdt').show();
+                            isValid = false;
+                        }
+
+                        if (name.length === 0) {
+                            $('#invalid-feedback-name').show();
+                            isValid = false;
+                        }
+
+                        if (dob.length === 0) {
+                            $('#invalid-feedback-dob').show();
+                            isValid = false;
+                        }
+
+                        if (position.length === 0) {
+                            $('#invalid-feedback-position').show();
+                            isValid = false;
+                        }
+
+                        if (gender.length === 0) {
+                            $('#invalid-feedback-gender').show();
+                            isValid = false;
+                        }
+n
+                        if (isValid) {
+                            let req = {
+                                email: email,
+                                sdt: sdt,
+                                name: name,
+                                midName: midName,
+                                dob: dob,
+                                role: position,
+                                status: status,
+                                firstName: firstName,
+                                gender: gender
+                            };
+                            console.log("DỮ LIỆU GỬI LÊN BACKEND:", req);
+
+                            $.ajax({
+                                url: '/admin/nhanvien/' + id,
+                                type: 'PUT',
+                                contentType: 'application/json',
+                                data: JSON.stringify(req),
+                                success: function (data) {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Cập nhật thành công!',
+                                        timer: 2000,
+                                        showConfirmButton: false
+                                    });
+                                    setTimeout(function () {
+                                        location.href = "/admin/nhanvien/list";
+                                    }, 2000);
+                                },
+                                error: function (data) {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Lỗi!',
+                                        text: data.responseJSON.message
+                                    });
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+            $('.btn-delete-promotion').click(function () {
+                Swal.fire({
+                    title: 'Bạn có chắc muốn xóa nhân viên này?',
+                    text: 'Hành động này không thể hoàn tác!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Có, xóa',
+                    cancelButtonText: 'Hủy bỏ'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        let id = $('#nhanVienId').val();
+
+                        $.ajax({
+                            url: '/admin/nhanvien/' + id,
+                            type: 'DELETE',
+                            success: function () {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Xóa thành công!',
+                                    timer: 2000,
+                                    showConfirmButton: false
+                                });
+                                setTimeout(function () {
+                                    location.href = "/admin/nhanvien/list";
+                                }, 2000);
+                            },
+                            error: function (data) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Lỗi!',
+                                    text: data.responseJSON?.message || 'Không thể xóa nhân viên.'
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+
+        </script>
+    </div>
+</div>
+</body>
+</html>

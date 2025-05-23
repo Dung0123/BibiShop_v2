@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html layout:decorate="~{admin/layout}" lang="vi" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+<div class="wrapper wrapper-content" layout:fragment="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Sản Phẩm Chi Tiết</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <form role="form" enctype="multipart/form-data">
+                            <div class="col-sm-6 b-r">
+                                <div class="form-group">
+                                    <label>Sản Phẩm</label>
+                                    <div style="display: flex; gap: 10px; margin-top: 5px;">
+                                        <select class="form-control m-b" id="sanPham" name="account">
+                                            <option disabled selected>-- Chọn Sản Phẩm --</option>
+                                            <th:block th:each="item : ${listProduct}">
+                                                <option th:value="${item.id}"
+                                                        th:text="${item.getTenSanPham()}"></option>
+                                            </th:block>
+                                        </select>
+                                        <button class="btn btn-primary dim" id="btn-product" type="button">
+                                            <i class="fa fa-plus"></i> Thêm
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Kích Cỡ</label>
+                                    <div style="display: flex; gap: 10px; margin-top: 5px;">
+                                        <select class="form-control m-b" id="kichCo" name="account">
+                                            <option disabled selected>-- Chọn Kích cỡ --</option>
+                                            <th:block th:each="item : ${listSize}">
+                                                <option th:value="${item.id}" th:text="${item.tenKichCo}"></option>
+                                            </th:block>
+                                        </select>
+                                        <button class="btn btn-primary dim" id="btn-size" type="button">
+                                            <i class="fa fa-plus"></i> Thêm
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Danh Mục</label>
+                                    <div style="display: flex; gap: 10px; margin-top: 5px;">
+                                        <select class="form-control m-b" id="danhMuc" name="account">
+                                            <option disabled selected>-- Chọn Danh Mục --</option>
+                                            <th:block th:each="item : ${listCategory}">
+                                                <option th:value="${item.id}" th:text="${item.tenDanhMuc}"></option>
+                                            </th:block>
+                                        </select>
+                                        <button class="btn btn-primary dim" id="btn-category" type="button">
+                                            <i class="fa fa-plus"></i> Thêm
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Màu Sắc</label>
+                                    <div style="display: flex; gap: 10px; margin-top: 5px;">
+                                        <select class="form-control m-b" id="mauSac" name="account">
+                                            <option disabled selected>-- Chọn Màu Sắc --</option>
+                                            <th:block th:each="item : ${listColor}">
+                                                <option th:value="${item.id}" th:text="${item.ten}"></option>
+                                            </th:block>
+                                        </select>
+                                        <button class="btn btn-primary dim" id="btn-color" type="button">
+                                            <i class="fa fa-plus"></i> Thêm
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Chất Liệu</label>
+                                    <div style="display: flex; gap: 10px; margin-top: 5px;">
+                                        <select class="form-control m-b" id="chatLieu" name="account">
+                                            <option disabled selected>-- Chọn Chất Liệu --</option>
+                                            <th:block th:each="item : ${listMaterial}">
+                                                <option th:value="${item.id}" th:text="${item.ten}"></option>
+                                            </th:block>
+                                        </select>
+                                        <button class="btn btn-primary dim" id="btn-material" type="button">
+                                            <i class="fa fa-plus"></i> Thêm
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Trạng Thái</label>
+                                    <select class="form-control m-b" id="trangThai" name="account">
+                                            <option th:value="0">Đang Kinh Doanh</option>
+                                            <option th:value="1">Ngừng Kinh Doanh</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Giá Sản Phẩm</label>
+                                    <input type="number" id="giaSanPham" placeholder="Enter price" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Số Lượng</label>
+                                    <input type="number" id="soLuong" placeholder="Enter number" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Trọng Lượng</label>
+                                    <input type="number" id="trongLuong" placeholder="Enter quality"
+                                           class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Hình Ảnh</label>
+                                    <input type="file" name="hinhAnhFile" accept="image/*" required />
+                                </div>
+                                <div class="form-group">
+                                    <label>Mô Tả</label>
+                                    <textarea class="form-control" name="" id="moTa" cols="6"
+                                              style="resize: none;"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="m-t-md pull-right">
+                                <p>
+                                    <a class="btn btn-primary btn-rounded" id="btn-submit" href="#">Thêm</a>
+                                    <a class="btn btn-info btn-rounded" href="#">Cập Nhật</a>
+                                    <a class="btn btn-warning btn-rounded" href="#">Reset</a>
+                                    <a class="btn btn-danger btn-rounded" href="#">Đóng</a>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Danh Sách Sản Phẩm</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên Sản Phẩm</th>
+                            <th>Giá</th>
+                            <th>Số Lượng</th>
+                            <th>Màu Sắc</th>
+                            <th>Kích Cỡ</th>
+                            <th>Danh Mục</th>
+                            <th>Chất Liệu</th>
+                            <th>Mô Tả</th>
+                            <th>Trọng Lượng</th>
+                            <th>Hình Ảnh</th>
+                            <th>Trạng Thái</th>
+                            <th>Chọn</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="item : ${pageSPCT.content}">
+                            <td th:text="${item.id}"></td>
+                            <td th:text="${item.sanPham.tenSanPham}"></td>
+                            <td th:text="${item.giaSanPham}"></td>
+                            <td th:text="${item.soLuong}"></td>
+                            <td th:text="${item.mauSac.ten}"></td>
+                            <td th:text="${item.kichCo.tenKichCo}"></td>
+                            <td th:text="${item.danhMuc.tenDanhMuc}"></td>
+                            <td th:text="${item.chatLieu.ten}"></td>
+                            <td th:text="${item.moTa}"></td>
+                            <td th:text="${item.trongLuong}"></td>
+                            <td>
+                                <!--                         a       <img th:src="@{${item.hinhAnh.url}}" alt="ảnh" width="40" height="40"/>-->
+                            </td>
+                            <td>
+                                <span class="badge"
+                                      th:classappend="${item.trangThai == 1} ? ' badge-primary' : ' badge-secondary'"
+                                      th:text="${item.trangThai == 1 ? 'Đang Kinh Doanh' : 'Ngừng Bán'}">
+                                    Đang Kinh Doanh
+                                </span>
+                            </td>
+                            <td>
+                                <button class="btn btn-success dim btn-view" type="button">
+                                    <i class="fa fa-eye"></i>
+                                </button>
+                                <button class="btn btn-danger dim btn-delete" type="button" id="btn-delete">
+                                    <i class="fa fa-trash-o"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal inmodal in" id="modalProduct" tabindex="-1" role="dialog" aria-hidden="true"
+         style="display: none; padding-right: 15px;">
+        <div class="modal-dialog">
+            <div class="modal-content animated bounceInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                            class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Sản Phẩm</h4>
+                    <form role="form">
+                        <div class="col-sm-12 b-r">
+                            <div class="form-group">
+                                <label>Tên sản phẩm</label>
+                                <input type="text" placeholder="Nhập tại đây" class="form-control">
+                            </div>
+                            <p class="pull-right"><a class="btn btn-primary btn-rounded" href="#">Thêm</a>
+                                <a class="btn btn-info btn-rounded" href="#">Cập Nhật</a>
+                            </p>
+                        </div>
+                    </form>
+                    <div class="col-sm-12 b-r">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th style="text-align: center;">STT</th>
+                                <th style="text-align: center;">Tên</th>
+                                <th style="text-align: center;">Trạng Thái</th>
+                                <th style="text-align: center;">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="item, iterStat : ${listProduct}">
+                                <td th:text="${iterStat.count}"></td>
+                                <td th:text="${item.tenSanPham}"></td>
+                                <td th:switch="${item.trangThai}">
+                                    <span th:case="0" class="badge badge-primary">Hoạt Động</span>
+                                    <span th:case="1" class="badge badge-danger">Ngừng</span>
+                                </td>
+                                <td>
+                                    <a class="btn btn-success  dim">
+                                        <i class="fa fa-eye"></i></a>
+                                    <a th:attr="onclick=|confirmDelete(${item.id})|"
+                                       class="btn btn-danger dim"
+                                       type="button">
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal inmodal in" id="modalSize" tabindex="-1" role="dialog" aria-hidden="true"
+         style="display: none; padding-right: 15px;">
+        <div class="modal-dialog">
+            <div class="modal-content animated bounceInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                            class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Kích Cỡ</h4>
+                    <form role="form">
+                        <div class="col-sm-12 b-r">
+                            <div class="form-group">
+                                <label>Tên kích cỡ</label>
+                                <input type="text" placeholder="Nhập tại đây" class="form-control">
+                            </div>
+                            <p class="pull-right"><a class="btn btn-primary btn-rounded" href="#">Thêm</a>
+                                <a class="btn btn-info btn-rounded" href="#">Cập Nhật</a>
+                            </p>
+                        </div>
+                    </form>
+                    <div class="col-sm-12 b-r">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th style="text-align: center;">STT</th>
+                                <th style="text-align: center;">Tên</th>
+                                <th style="text-align: center;">Trạng Thái</th>
+                                <th style="text-align: center;">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="item, iterStat : ${listSize}">
+                                <td th:text="${iterStat.count}"></td>
+                                <td th:text="${item.tenKichCo}"></td>
+                                <td th:switch="${item.trangThai}">
+                                    <span th:case="0" class="badge badge-primary">Hoạt Động</span>
+                                    <span th:case="1" class="badge badge-danger">Ngừng</span>
+                                </td>
+                                <td>
+                                    <a th:href="@{/admin/danhmuc/view/{id}(id=${item.id})}"
+                                       class="btn btn-success  dim">
+                                        <i class="fa fa-eye"></i></a>
+                                    <a th:attr="onclick=|confirmDelete(${item.id})|"
+                                       class="btn btn-danger dim"
+                                       type="button">
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal inmodal in" id="modalCategory" tabindex="-1" role="dialog" aria-hidden="true"
+         style="display: none; padding-right: 15px;">
+        <div class="modal-dialog">
+            <div class="modal-content animated bounceInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                            class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Danh Mục</h4>
+                    <form role="form">
+                        <div class="col-sm-12 b-r">
+                            <div class="form-group">
+                                <label>Tên danh mục</label>
+                                <input type="text" placeholder="Nhập tại đây" class="form-control">
+                            </div>
+                            <p class="pull-right"><a class="btn btn-primary btn-rounded" href="#">Thêm</a>
+                                <a class="btn btn-info btn-rounded" href="#">Cập Nhật</a>
+                            </p>
+                        </div>
+                    </form>
+                    <div class="col-sm-12 b-r">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th style="text-align: center;">STT</th>
+                                <th style="text-align: center;">Tên</th>
+                                <th style="text-align: center;">Trạng Thái</th>
+                                <th style="text-align: center;">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="item, iterStat : ${listCategory}">
+                                <td th:text="${iterStat.count}"></td>
+                                <td th:text="${item.tenDanhMuc}"></td>
+                                <td th:switch="${item.trangThai}">
+                                    <span th:case="0" class="badge badge-primary">Hoạt Động</span>
+                                    <span th:case="1" class="badge badge-danger">Ngừng</span>
+                                </td>
+                                <td>
+                                    <a th:href="@{/admin/danhmuc/view/{id}(id=${item.id})}"
+                                       class="btn btn-success  dim">
+                                        <i class="fa fa-eye"></i></a>
+                                    <a th:attr="onclick=|confirmDelete(${item.id})|"
+                                       class="btn btn-danger dim"
+                                       type="button">
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal inmodal in" id="modalColor" tabindex="-1" role="dialog" aria-hidden="true"
+         style="display: none; padding-right: 15px;">
+        <div class="modal-dialog">
+            <div class="modal-content animated bounceInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                            class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Màu Sắc</h4>
+                    <form role="form">
+                        <div class="col-sm-12 b-r">
+                            <div class="form-group">
+                                <label>Tên màu sắc</label>
+                                <input type="text" placeholder="Nhập tại đây" class="form-control">
+                            </div>
+                            <p class="pull-right"><a class="btn btn-primary btn-rounded" href="#">Thêm</a>
+                                <a class="btn btn-info btn-rounded" href="#">Cập Nhật</a>
+                            </p>
+                        </div>
+                    </form>
+                    <div class="col-sm-12 b-r">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th style="text-align: center;">STT</th>
+                                <th style="text-align: center;">Tên</th>
+                                <th style="text-align: center;">Trạng Thái</th>
+                                <th style="text-align: center;">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="item, iterStat : ${listColor}">
+                                <td th:text="${iterStat.count}"></td>
+                                <td th:text="${item.ten}"></td>
+                                <td th:switch="${item.trangThai}">
+                                    <span th:case="0" class="badge badge-primary">Hoạt Động</span>
+                                    <span th:case="1" class="badge badge-danger">Ngừng</span>
+                                </td>
+                                <td>
+                                    <a th:href="@{/admin/danhmuc/view/{id}(id=${item.id})}"
+                                       class="btn btn-success  dim">
+                                        <i class="fa fa-eye"></i></a>
+                                    <a th:attr="onclick=|confirmDelete(${item.id})|"
+                                       class="btn btn-danger dim"
+                                       type="button">
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal inmodal in" id="modalMaterial" tabindex="-1" role="dialog" aria-hidden="true"
+         style="display: none; padding-right: 15px;">
+        <div class="modal-dialog">
+            <div class="modal-content animated bounceInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                            class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Chất Liệu</h4>
+                    <form role="form">
+                        <div class="col-sm-12 b-r">
+                            <div class="form-group">
+                                <label>Tên Chất Liệu </label>
+                                <input type="text" placeholder="Nhập tại đây" class="form-control">
+                            </div>
+                            <p class="pull-right"><a class="btn btn-primary btn-rounded" href="#">Thêm</a>
+                                <a class="btn btn-info btn-rounded" href="#">Cập Nhật</a>
+                            </p>
+                        </div>
+                    </form>
+                    <div class="col-sm-12 b-r">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th style="text-align: center;">STT</th>
+                                <th style="text-align: center;">Tên</th>
+                                <th style="text-align: center;">Trạng Thái</th>
+                                <th style="text-align: center;">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="item, iterStat : ${listMaterial}">
+                                <td th:text="${iterStat.count}"></td>
+                                <td th:text="${item.ten}"></td>
+                                <td th:switch="${item.trangThai}">
+                                    <span th:case="0" class="badge badge-primary">Hoạt Động</span>
+                                    <span th:case="1" class="badge badge-danger">Ngừng</span>
+                                </td>
+                                <td>
+                                    <a th:href="@{/admin/danhmuc/view/{id}(id=${item.id})}"
+                                       class="btn btn-success  dim">
+                                        <i class="fa fa-eye"></i></a>
+                                    <a th:attr="onclick=|confirmDelete(${item.id})|"
+                                       class="btn btn-danger dim"
+                                       type="button">
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:inline="javascript">
+        $('#btn-size').on('click', function () {
+            $('#modalSize').modal('show');
+        });
+        $('#btn-category').on('click', function () {
+            $('#modalCategory').modal('show');
+        });
+        $('#btn-color').on('click', function () {
+            $('#modalColor').modal('show');
+        });
+        $('#btn-material').on('click', function () {
+            $('#modalMaterial').modal('show');
+        });
+        $('#btn-product').on('click', function () {
+            $('#modalProduct').modal('show');
+        });
+
+        // document.getElementById('btn-submit').addEventListener('click', function() {
+        //     // Lấy dữ liệu từ form (bạn thay id, name đúng với form bạn nhé)
+        //     const sanPham = document.getElementById('sanPham').value;
+        //     const kichCo = document.getElementById('kichCo').value;
+        //     const danhMuc = document.getElementById('danhMuc').value;
+        //     const mauSac = document.getElementById('mauSac').value;
+        //     const chatLieu = document.getElementById('chatLieu').value;
+        //     const trangThai = document.getElementById('trangThai').value;
+        //     const giaSanPham = document.getElementById('giaSanPham').value;
+        //     const soLuong = document.getElementById('soLuong').value;
+        //     const trongLuong = document.getElementById('trongLuong').value;
+        //     const moTa = document.getElementById('moTa').value;
+        //
+        //     // TODO: Nếu có ảnh thì xử lý upload riêng (hoặc dùng FormData, tùy nhu cầu)
+        //
+        //     // Chuẩn bị data gửi
+        //     const data = {
+        //         sanPham: parseInt(sanPham),
+        //         kichCoId: parseInt(kichCo),
+        //         danhMucId: parseInt(danhMuc),
+        //         mauSacId: parseInt(mauSac),
+        //         chatLieuId: parseInt(chatLieu),
+        //         trangThai: trangThai,
+        //         giaSanPham: parseFloat(giaSanPham),
+        //         soLuong: parseInt(soLuong),
+        //         trongLuong: parseFloat(trongLuong),
+        //         moTa: moTa
+        //     };
+        //
+        //     // Kiểm tra các trường bắt buộc
+        //     if (!sanPham || !kichCo || !danhMuc || !mauSac || !chatLieu) {
+        //         Swal.fire('Lỗi', 'Vui lòng chọn đầy đủ các mục bắt buộc!', 'error');
+        //         return;
+        //     }
+        //
+        //     Swal.fire({
+        //         title: 'Xác nhận thêm sản phẩm chi tiết?',
+        //         icon: 'question',
+        //         showCancelButton: true,
+        //         confirmButtonText: 'Đồng ý',
+        //         cancelButtonText: 'Hủy'
+        //     }).then((result) => {
+        //         if (result.isConfirmed) {
+        //             fetch('/api/SPCT', {
+        //                 method: 'POST',
+        //                 headers: {
+        //                     'Content-Type': 'application/json'
+        //                 },
+        //                 body: JSON.stringify(data)
+        //             })
+        //                 .then(async (response) => {
+        //                     if (!response.ok) {
+        //                         const errorText = await response.text();
+        //                         throw new Error(errorText || 'Lỗi khi thêm sản phẩm chi tiết');
+        //                     }
+        //                     return response.json();
+        //                 })
+        //                 .then(data => {
+        //                     Swal.fire('Thành công', 'Thêm sản phẩm chi tiết thành công!', 'success');
+        //                     // Có thể reset form hoặc làm gì đó thêm ở đây
+        //                 })
+        //                 .catch(error => {
+        //                     Swal.fire('Lỗi', error.message || 'Thêm sản phẩm thất bại', 'error');
+        //                 });
+        //         }
+        //     });
+        // });
+
+        document.getElementById('btn-submit').addEventListener('click', function(event) {
+            event.preventDefault(); // ngăn form submit mặc định
+
+            const sanPham = document.getElementById('sanPham').value;
+            const kichCo = document.getElementById('kichCo').value;
+            const danhMuc = document.getElementById('danhMuc').value;
+            const mauSac = document.getElementById('mauSac').value;
+            const chatLieu = document.getElementById('chatLieu').value;
+            const trangThai = document.getElementById('trangThai').value;
+            const giaSanPham = document.getElementById('giaSanPham').value;
+            const soLuong = document.getElementById('soLuong').value;
+            const trongLuong = document.getElementById('trongLuong').value;
+            const moTa = document.getElementById('moTa').value;
+            const fileInput = document.querySelector('input[name="hinhAnhFile"]');
+
+            if (!sanPham || !kichCo || !danhMuc || !mauSac || !chatLieu) {
+                Swal.fire('Lỗi', 'Vui lòng chọn đầy đủ các mục bắt buộc!', 'error');
+                return;
+            }
+
+            if (!fileInput.files || fileInput.files.length === 0) {
+                Swal.fire('Lỗi', 'Vui lòng chọn file ảnh!', 'error');
+                return;
+            }
+
+            Swal.fire({
+                title: 'Xác nhận thêm sản phẩm chi tiết?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Đồng ý',
+                cancelButtonText: 'Hủy'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const formData = new FormData();
+                    formData.append('sanPhamId', sanPham);
+                    formData.append('kichCoId', kichCo);
+                    formData.append('danhMucId', danhMuc);
+                    formData.append('mauSacId', mauSac);
+                    formData.append('chatLieuId', chatLieu);
+                    formData.append('trangThai', trangThai);
+                    formData.append('giaSanPham', giaSanPham);
+                    formData.append('soLuong', soLuong);
+                    formData.append('trongLuong', trongLuong);
+                    formData.append('moTa', moTa);
+                    formData.append('hinhAnhFile', fileInput.files[0]);
+
+                    fetch('/api/SPCT', {
+                        method: 'POST',
+                        body: formData
+                        // **Không set Content-Type**, browser tự set multipart/form-data kèm boundary
+                    })
+                        .then(async (response) => {
+                            if (!response.ok) {
+                                const errorText = await response.text();
+                                throw new Error(errorText || 'Lỗi khi thêm sản phẩm chi tiết');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            Swal.fire('Thành công', 'Thêm sản phẩm chi tiết thành công!', 'success');
+                            // reset form nếu cần
+                        })
+                        .catch(error => {
+                            Swal.fire('Lỗi', error.message || 'Thêm sản phẩm thất bại', 'error');
+                        });
+                }
+            });
+        });
+
+    </script>
+
+</div>
+</body>
+</html>

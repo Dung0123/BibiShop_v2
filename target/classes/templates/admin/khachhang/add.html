@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html layout:decorate="~{admin/layout}" lang="vi" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+<div class="wrapper wrapper-content" layout:fragment="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                 <div class="ibox-title">
+                <h5>Thêm Khách Hàng</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form role="form">
+                                <div class="col-sm-6 b-r">
+                                    <div class="form-group"><label>Email</label>
+                                        <input type="email" placeholder="Enter email" class="form-control">
+                                    </div>
+
+                                    <div class="form-group"><label>Họ
+                                    </label>
+                                        <input type="text" placeholder="Họ" class="form-control">
+                                    </div>
+                                    <div class="form-group"><label>Tên Đệm
+                                    </label>
+                                        <input type="text" placeholder="Tên đệm" class="form-control">
+                                    </div>
+                                    <div class="form-group"><label>Tên
+                                    </label>
+                                        <input type="text" placeholder="Tên" class="form-control">
+                                    </div>
+                                    <div class="form-group"><label>Số Điện Thoại</label>
+                                        <input type="text" placeholder="Phone" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group"><label>Ngày Sinh
+                                    </label>
+                                        <input type="date" class="form-control">
+                                    </div>
+                                    <div class="form-group"><label>Role</label>
+                                        <input type="text" placeholder="Role" class="form-control">
+                                    </div>
+                                    <div class="form-group"><label>Trạng Thái
+                                    </label>
+                                        <input type="tex" placeholder="Status" class="form-control">
+                                    </div>
+                                    <div class="form-group"><label>Địa Chỉ</label>
+                                        <input type="text" placeholder="Address" class="form-control">
+                                    </div>
+
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="col-sm-3 col-sm-offset-2 pull-right">
+                                        <button class="btn btn-primary" id="btn-add-customer" type="submit">Thêm</button>
+                                        <button class="btn btn-white" type="submit">Hủy</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<script th:inline="javascript">
+    $(document).ready(function () {
+        // Hide validation feedback initially
+        $('.invalid-feedback').hide();
+
+        $('.btn-create-promotion').click(function () {
+            let email = $('#email').val();
+            let sdt = $('#sdt').val();
+            let name = $('#name').val();
+            let midName = $('#midName').val();
+            let dob = $('#dob').val();
+            let position = $('#position').val();
+            let password = $('#password').val();
+            let status = $('#trangThai').val();
+            let gender = $('#gender').val();
+            let firstName = $('#firstName').val();
+            let islValid = true;
+
+            let emailRegex = /^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$/;
+            if (!email || !emailRegex.test(email)) {
+                $('#invalid-feedback-email').show();
+                isValid = false;
+            } else {
+                $('#invalid-feedback-email').hide();
+            }
+
+            let phoneRegex = /^0\d{9}$/;
+            if (!sdt || !phoneRegex.test(sdt)) {
+                $('#invalid-feedback-sdt').show();
+                isValid = false;
+            } else {
+                $('#invalid-feedback-sdt').hide();
+            }
+
+            if (!firstName) {
+                $('#invalid-feedback-firstName').show();
+                isValid = false;
+            } else {
+                $('#invalid-feedback-firstName').hide();
+            }
+
+            if (!name) {
+                $('#invalid-feedback-name').show();
+                isValid = false;
+            } else {
+                $('#invalid-feedback-name').hide();
+            }
+
+            if (!dob) {
+                $('#invalid-feedback-dob').show();
+                isValid = false;
+            } else {
+                $('#invalid-feedback-dob').hide();
+            }
+
+            if (!password) {
+                $('#invalid-feedback-password').show();
+                isValid = false;
+            } else {
+                $('#invalid-feedback-password').hide();
+            }
+
+            if (!position) {
+                $('#invalid-feedback-position').show();
+                isValid = false;
+            } else {
+                $('#invalid-feedback-position').hide();
+            }
+
+            if (!status) {
+                $('#invalid-feedback-trangThai').show();
+                isValid = false;
+            } else {
+                $('#invalid-feedback-trangThai').hide();
+            }
+
+            if (!gender) {
+                $('#invalid-feedback-gender').show();
+                isValid = false;
+            } else {
+                $('#invalid-feedback-gender').hide();
+            }
+
+            if (isValid) {
+                let req = {
+                    email: email,
+                    sdt: sdt,
+                    name: name,
+                    midName: midName,
+                    dob: dob,
+                    role: position,
+                    password: password,
+                    status: status,
+                    firstName: firstName,
+                    gender: gender
+                };
+                const myJSON = JSON.stringify(req);
+                $.ajax({
+                    url: '/admin/nhanvien/create',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: myJSON,
+                    success: function (data) {
+                        toastr.success("Tạo nhân viên thành công");
+                        console.log(data + 'data')
+                        setTimeout(function () {
+                            location.href = "/admin/nhanvien/list";
+                        }, 1000);
+                    },
+                    error: function (error) {
+                        toastr.error(error.responseJSON.message || "Tạo nhân viên thất bại");
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

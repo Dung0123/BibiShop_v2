@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html layout:decorate="~{admin/layout}" lang="vi" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+<div class="wrapper wrapper-content" layout:fragment="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Danh Sách Khách Hàng</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+
+                    </div>
+                </div>
+                <div class="ibox-content"
+                     style="display: flex; justify-content: space-between; align-items: center;">
+                    <div class="col-md-4 pull-left">
+                        <form class="pull-left" method="GET" action="#" style="display: flex;">
+                            <input type="text" placeholder="Nhập từ khóa tìm kiếm" class="form-control">
+                            <button class="btn btn-outline btn-success dim m-l " type="button"><i
+                                    class="fa fa-search"></i></button>
+                        </form>
+                        <button class="btn btn-outline btn-primary dim" type="button"><i
+                                class="fa fa-repeat"></i></button>
+                    </div>
+
+                    <a class="btn btn-primary btn-rounded" th:href="@{/admin/khachhang/create}"><i class="fa fa-plus"></i>
+                        Thêm Nhân
+                        Viên </a>
+
+                </div>
+                <div class="ibox-content">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Tên</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>SĐT</th>
+                            <th>Địa Chỉ</th>
+                            <th>Ngày Sinh</th>
+                            <th>Giới Tính</th>
+                            <th>Trạng Thái</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="item : ${list}">
+                            <td th:text="${item.id}"></td>
+                            <td th:text="${item.ho + ' ' + item.tenDem + ' ' + item.ten}"></td>
+                            <td th:text="${item.email}"></td>
+                            <td th:text="${item.vaiTro}"></td>
+                            <td th:text="${item.sdt}"></td>
+                            <td th:text="${item.address}"></td>
+                            <td th:text="${item.ngaySinh}"></td>
+                            <td th:text="${item.gioiTinh == 0 ? 'Nam' : 'Nữ'}"></td>
+                            <td th:switch="${item.trangThai}">
+                                <span th:case="0" class="badge badge-primary">Hoạt Động</span>
+                                <span th:case="1" class="badge badge-danger">Ngừng</span>
+                            </td>
+                            <td>
+                                <a  class="btn btn-success dim" th:href="@{/admin/khachhang/{id}(id=${item.id})}" type="button"><i
+                                        class="fa fa-eye"></i></a>
+                                <a  class="btn btn-danger dim btn-delete" type="button" th:attr="data-id=${item.id}"><i
+                                        class="fa fa-trash-o"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" class="footable-visible">
+                                <ul class="pagination pull-right">
+                                    <li th:classappend="${currentPage == 1} ? 'disabled'">
+                                        <a th:href="@{/admin/khachhang/list(page=1)}">«</a>
+                                    </li>
+
+                                    <li th:classappend="${currentPage == 1} ? 'disabled'">
+                                        <a th:href="@{/admin/khachhang/list(page=${currentPage - 1})}">‹</a>
+                                    </li>
+
+                                    <li th:each="i : ${#numbers.sequence(1, totalPages)}"
+                                        th:classappend="${i == currentPage} ? 'active'">
+                                        <a th:href="@{/admin/khachhang/list(page=${i})}" th:text="${i}"></a>
+                                    </li>
+
+                                    <li th:classappend="${currentPage == totalPages} ? 'disabled'">
+                                        <a th:href="@{/admin/khachhang/list(page=${currentPage + 1})}">›</a>
+                                    </li>
+
+                                    <li th:classappend="${currentPage == totalPages} ? 'disabled'">
+                                        <a th:href="@{/admin/khachhang/list(page=${totalPages})}">»</a>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const deleteButtons = document.querySelectorAll('.btn-delete');
+
+                deleteButtons.forEach(button => {
+                    button.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const id = this.getAttribute('data-id');
+
+                        Swal.fire({
+                            title: 'Xác nhận xóa?',
+                            text: "Hành động này không thể hoàn tác!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#d33',
+                            cancelButtonColor: '#3085d6',
+                            confirmButtonText: 'Xóa',
+                            cancelButtonText: 'Hủy'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                fetch(`/admin/khachhang/${id}`, {
+                                    method: 'DELETE',
+                                    headers: {
+                                        'X-Requested-With': 'XMLHttpRequest',
+                                        'Content-Type': 'application/json'
+                                    }
+                                }).then(response => {
+                                    if (response.ok) {
+                                        Swal.fire(
+                                            'Đã xóa!',
+                                            'Khách hàng đã được xóa.',
+                                            'success'
+                                        ).then(() => {
+                                            location.reload();
+                                        });
+                                    } else {
+                                        Swal.fire(
+                                            'Lỗi!',
+                                            'Không thể xóa khách hàng.',
+                                            'error'
+                                        );
+                                    }
+                                }).catch(error => {
+                                    Swal.fire(
+                                        'Lỗi!',
+                                        'Có lỗi xảy ra.',
+                                        'error'
+                                    );
+                                });
+                            }
+                        });
+                    });
+                });
+            });
+        </script>
+
+    </div>
+</div>
+
+</body>
+
+</html>
+
