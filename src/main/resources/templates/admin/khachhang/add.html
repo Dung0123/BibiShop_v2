@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html layout:decorate="~{admin/layout}" lang="vi" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
 <body>
 <div class="wrapper wrapper-content" layout:fragment="content">
     <div class="row">
@@ -62,7 +64,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="col-sm-3 col-sm-offset-2 pull-right">
-                                        <button class="btn btn-primary" type="submit">Thêm</button>
+                                        <button class="btn btn-primary" id="btn-add-customer" type="submit">Thêm</button>
                                         <button class="btn btn-white" type="submit">Hủy</button>
                                     </div>
                                 </div>

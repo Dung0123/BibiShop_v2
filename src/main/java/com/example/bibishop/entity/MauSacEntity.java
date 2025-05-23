@@ -21,7 +21,7 @@ import lombok.ToString;
 @Builder
 public class MauSacEntity extends SuperEntity{
 
-    @Column(name = "ten", length = 150, nullable = false)
+    @Column(name = "ten", columnDefinition = "nvarchar(20)", nullable = false)
     private String ten;
 
     @Column(name = "trangThai", length = 10, nullable = false)

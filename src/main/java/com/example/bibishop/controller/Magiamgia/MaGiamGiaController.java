@@ -34,50 +34,50 @@ public class MaGiamGiaController {
 
   @GetMapping("MaGiamGia/list")
   public String getAllvoucher(Model model,
-      @RequestParam(name = "page", defaultValue = "1") int page,
-      @RequestParam(name = "size", defaultValue = "5") int size) {
+                              @RequestParam(name = "page", defaultValue = "1") int page,
+                              @RequestParam(name = "size", defaultValue = "5") int size) {
 
     Page<MaGiamGia> maGiamGiaPage = maGiamGiaRepository.findAllMaGiamGia(
-        PageRequest.of(page - 1, size));
+            PageRequest.of(page - 1, size));
 
-    // Check and update status based on expiration date
     LocalDate currentDate = LocalDate.now();
     for (MaGiamGia voucher : maGiamGiaPage.getContent()) {
-      if (voucher.getNgayKetThuc() != null && currentDate.isAfter(
-          voucher.getNgayKetThuc().toLocalDate())) {
-        if (voucher.getTrangThai() != 0) { // Only update if not already inactive
+      if (voucher.getNgayKetThuc() != null && currentDate.isAfter(voucher.getNgayKetThuc().toLocalDate())) {
+        if (voucher.getTrangThai() != 0) {
           voucher.setTrangThai(0);
-          maGiamGiaRepository.save(voucher); // Persist the change
+          maGiamGiaRepository.save(voucher);
         }
       }
     }
-    // Add updated page to model
-    model.addAttribute("list", maGiamGiaPage);
-    return "admin/MaGiamGia/list";
-  }
 
+    model.addAttribute("list", maGiamGiaPage);
+    model.addAttribute("currentPage", page);
+    model.addAttribute("totalPages", maGiamGiaPage.getTotalPages());
+
+    return "admin/magiamgia/list";
+  }
 
   @GetMapping("MaGiamGia/add")
   public String addMaGiamGia(Model model) {
     model.addAttribute("percentageDiscount", new CreatePercentageDiscountDTO());
     model.addAttribute("valueDiscount", new CreateValueDiscountDTO());
-    return "admin/MaGiamGia/add";
+    return "admin/magiamgia/create";
   }
 
   @PostMapping("MaGiamGia/add/percentage")
   public String addPercentageDiscount(
-      @ModelAttribute("percentageDiscount") CreatePercentageDiscountDTO dto,
-      BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+          @ModelAttribute("percentageDiscount") CreatePercentageDiscountDTO dto,
+          BindingResult bindingResult, RedirectAttributes redirectAttributes) {
     if (bindingResult.hasErrors()) {
       redirectAttributes.addFlashAttribute("message", "Có lỗi khi nhập thông tin.");
       redirectAttributes.addFlashAttribute("messageType", "error");
-      return "admin/MaGiamGia/add";
+      return "admin/magiamgia/create";
     }
     try {
       MaGiamGia newMaGiamGia = new MaGiamGia();
       newMaGiamGia.setTen(dto.getTen());
       newMaGiamGia.setMa(
-          dto.getMa() != null && !dto.getMa().isEmpty() ? dto.getMa() : generateRandomCode());
+              dto.getMa() != null && !dto.getMa().isEmpty() ? dto.getMa() : generateRandomCode());
       newMaGiamGia.setGiaTriGiam(dto.getPhanTramGiam());
       newMaGiamGia.setGiamToiDa(dto.getGiamToiDa());
       newMaGiamGia.setSoLuong(dto.getSoLuong());
@@ -89,34 +89,34 @@ public class MaGiamGiaController {
 
       maGiamGiaRepository.save(newMaGiamGia);
       redirectAttributes.addFlashAttribute("message",
-          "Thêm mã giảm giá theo phần trăm thành công!");
+              "Thêm mã giảm giá theo phần trăm thành công!");
       redirectAttributes.addFlashAttribute("messageType", "success");
       return "redirect:/admin/MaGiamGia/list";
     } catch (Exception e) {
       // Log the exception for debugging
       e.printStackTrace();
       redirectAttributes.addFlashAttribute("message",
-          "Lỗi khi thêm mã giảm giá: " + e.getMessage());
+              "Lỗi khi thêm mã giảm giá: " + e.getMessage());
       redirectAttributes.addFlashAttribute("messageType", "error");
-      return "admin/MaGiamGia/add";
+      return "admin/magiamgia/add";
     }
   }
 
   @PostMapping("MaGiamGia/add/value")
   public String addValueDiscount(
-      @ModelAttribute("valueDiscount") CreateValueDiscountDTO dto,
-      BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+          @ModelAttribute("valueDiscount") CreateValueDiscountDTO dto,
+          BindingResult bindingResult, RedirectAttributes redirectAttributes) {
     if (bindingResult.hasErrors()) {
       redirectAttributes.addFlashAttribute("message", "Có lỗi khi nhập thông tin.");
       redirectAttributes.addFlashAttribute("messageType", "error");
-      return "admin/MaGiamGia/add";
+      return "admin/magiamgia/create";
     }
 
     try {
       MaGiamGia newMaGiamGia = new MaGiamGia();
       newMaGiamGia.setTen(dto.getTen());
       newMaGiamGia.setMa(
-          dto.getMa() != null && !dto.getMa().isEmpty() ? dto.getMa() : generateRandomCode());
+              dto.getMa() != null && !dto.getMa().isEmpty() ? dto.getMa() : generateRandomCode());
       newMaGiamGia.setGiaTriGiam(dto.getGiaTriGiam());
       newMaGiamGia.setDonToiThieu(dto.getDonToiThieu());
       newMaGiamGia.setSoLuong(dto.getSoLuong());
@@ -134,7 +134,7 @@ public class MaGiamGiaController {
       // Log the exception for debugging
       e.printStackTrace();
       redirectAttributes.addFlashAttribute("message",
-          "Lỗi khi thêm mã giảm giá: " + e.getMessage());
+              "Lỗi khi thêm mã giảm giá: " + e.getMessage());
       redirectAttributes.addFlashAttribute("messageType", "error");
       return "redirect:/admin/MaGiamGia/list";
     }
@@ -172,21 +172,21 @@ public class MaGiamGiaController {
   @GetMapping("MaGiamGia/view/{id}")
   public String viewAndUpdateMaGiamGia(@PathVariable int id, Model model) {
     maGiamGiaRepository.findById( id).ifPresentOrElse(
-        maGiamGia -> model.addAttribute("updateMagiamgia", maGiamGia),
-        () -> {
-          throw new RuntimeException("Không tìm thấy mã giảm giá với ID: " + id);
-        }
+            maGiamGia -> model.addAttribute("updateMagiamgia", maGiamGia),
+            () -> {
+              throw new RuntimeException("Không tìm thấy mã giảm giá với ID: " + id);
+            }
     );
-    return "admin/MaGiamGia/viewAndUpdate";
+    return "admin/magia mgia/update";
   }
 
   // Cập nhật mã giảm giá
   @PostMapping("MaGiamGia/update/{id}")
   public String updateMaGiamGia(
-      @PathVariable int id,
-      @ModelAttribute("updateMagiamgia") MaGiamGia maGiamGia,
-      BindingResult bindingResult,
-      RedirectAttributes redirectAttributes) {
+          @PathVariable int id,
+          @ModelAttribute("updateMagiamgia") MaGiamGia maGiamGia,
+          BindingResult bindingResult,
+          RedirectAttributes redirectAttributes) {
     // Kiểm tra lỗi cơ bản từ BindingResult
     if (bindingResult.hasErrors()) {
       redirectAttributes.addFlashAttribute("message", "Có lỗi khi nhập thông tin. Vui lòng kiểm tra lại dữ liệu!");
@@ -199,7 +199,7 @@ public class MaGiamGiaController {
       maGiamGia.setId(id);
       // Giữ ngày tạo gốc
       MaGiamGia existingMaGiamGia = maGiamGiaRepository.findById(id).orElseThrow(
-          () -> new RuntimeException("Không tìm thấy mã giảm giá với ID: " + id)
+              () -> new RuntimeException("Không tìm thấy mã giảm giá với ID: " + id)
       );
       maGiamGia.setNgayTao(existingMaGiamGia.getNgayTao());
       // Lưu bản ghi cập nhật

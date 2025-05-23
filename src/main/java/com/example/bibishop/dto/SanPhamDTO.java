@@ -2,11 +2,12 @@ package com.example.bibishop.dto;
 
 import com.example.bibishop.entity.SanPhamChiTietEntity;
 import com.example.bibishop.entity.SanPhamEntity;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -14,6 +15,8 @@ import lombok.NoArgsConstructor;
 public class SanPhamDTO extends SuperDTO{
 
     private String tenSanPham;
+
+    private int trangThai;
 
     private List<SanPhamChiTietDTO> productDetailDtos;
 

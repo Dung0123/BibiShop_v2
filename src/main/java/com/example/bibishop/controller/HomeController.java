@@ -17,5 +17,8 @@ public class HomeController {
             return "admin/index";
     }
 
-
+    @GetMapping("/sanpham")
+    public String sanpham() {
+        return "admin/sanpham/addSPCT";
+    }
 }

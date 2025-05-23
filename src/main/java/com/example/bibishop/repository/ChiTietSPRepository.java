@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.*;
+
 @Repository
 public interface ChiTietSPRepository extends JpaRepository<SanPhamChiTietEntity, UUID> {
 //    Optional<UserEntity> findById(SanPhamChiTietPK sanPhamChiTietPK);

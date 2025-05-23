@@ -2,15 +2,18 @@ package com.example.bibishop.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
-import java.math.BigDecimal;
-import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.math.BigDecimal;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class SanPhamChiTietCrud extends SuperDTO {
+
     @NotNull(message = "Giá sản phẩm không được để trống")
     private BigDecimal giaSanPham;
 
@@ -23,20 +26,31 @@ public class SanPhamChiTietCrud extends SuperDTO {
     private String moTa;
 
     @JsonProperty("sanPhamId")
-    private UUID sanPham;
+    private Integer sanPhamId;
+
     @JsonProperty("mauSacId")
-    private UUID mauSac;
+    private Integer mauSacId;
+
     @JsonProperty("kichCoId")
-    private UUID kichCo;
+    private Integer kichCoId;
+
     @JsonProperty("nsxId")
-    private UUID nsx;
+    private Integer nsxId;
+
     @JsonProperty("chatLieuId")
-    private UUID chatLieu;
+    private Integer chatLieuId;
+
     @JsonProperty("hinhAnhId")
-    private UUID hinhAnh;
+    private Integer hinhAnhId;
+
     @JsonProperty("danhMucId")
-    private UUID danhMuc;
+    private Integer danhMucId;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private MultipartFile hinhAnhfile;
+
     @JsonProperty("baoHanhId")
-    private UUID baoHanh;
+    private Integer baoHanhId;
+
     private int trangThai;
 }

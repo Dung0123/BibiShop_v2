@@ -1,12 +1,14 @@
 package com.example.bibishop.dto;
 
-import java.math.BigDecimal;
+
+
+import com.example.bibishop.entity.KichCoEntity;
+import com.example.bibishop.entity.MauSacEntity;
+import com.example.bibishop.entity.SanPhamEntity;
 import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -26,4 +28,16 @@ public class HoaDonChiTietDTO {
   private Integer chiTietSanPhamId;
   private Integer sanPhamId;
   private Integer hoaDonId;
+
+    private HoaDonDTO hoaDon;
+
+    private SanPhamChiTietDTO sanPhamChiTiet;
+
+
+    private BigDecimal thanhTien;
+
+    private LocalDate createDate;
+
+
+    private LocalDate updateDate;
 }

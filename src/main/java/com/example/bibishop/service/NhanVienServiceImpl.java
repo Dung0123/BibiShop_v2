@@ -79,6 +79,9 @@ public class NhanVienServiceImpl implements NhanVienService {
         nhanVien.setGioiTinh(request.getGender());
         nhanVien.setEmail(request.getEmail());
         nhanVien.setNgaySua(LocalDateTime.now());
+        nhanVien.setHo(request.getFirstName());
+        nhanVien.setTenDem(request.getMidName());
+        nhanVien.setTen(request.getName());
         return getNhanVien(request, nhanVien);
     }
 

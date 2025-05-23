@@ -7,16 +7,6 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="ibox float-e-margins">
-        <!-- <div class="ibox-title">
-            <h5>Danh Sách Hóa Đơn</h5>
-            <div class="pull-right">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-xs btn-white active">Today</button>
-                    <button type="button" class="btn btn-xs btn-white">Monthly</button>
-                    <button type="button" class="btn btn-xs btn-white">Annual</button>
-                </div>
-            </div>
-        </div> -->
         <div class="ibox-title">
           <h5>Danh Sách Phiếu Giảm Giá</h5>
           <div class="ibox-tools">
@@ -26,12 +16,6 @@
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
               <i class="fa fa-wrench"></i>
             </a>
-            <ul class="dropdown-menu dropdown-user">
-              <li><a href="#">Config option 1</a>
-              </li>
-              <li><a href="#">Config option 2</a>
-              </li>
-            </ul>
             <a class="close-link">
               <i class="fa fa-times"></i>
             </a>
@@ -53,13 +37,14 @@
               <th>Ngày Bắt Đầu</th>
               <th>Ngày Kết Thúc</th>
               <th>Gía trị giảm tối đa</th>
+              <th>Trạng Thái</th>
               <th>Thao Tác</th>
 
             </tr>
             </thead>
             <tbody>
             <tr th:each="item: ${list}">
-              <td th:text="${item.id}"></td>
+                <td th:text="${item.id}"></td>
                 <td th:text="${item.ten}"></td>
                 <td th:text="${item.ma}"></td>
                 <td th:text="${item.giaTriGiam}"></td>
@@ -67,11 +52,14 @@
                 <td th:text="${item.ngayBatDau}"></td>
                 <td th:text="${item.ngayKetThuc}"></td>
               <td th:text="${item.giamToiDa}"></td>
+              <td th:switch="${item.trangThai}">
+                <span th:case="1" class="badge badge-primary">Hoạt Động</span>
+                <span th:case="0" class="badge badge-danger">Ngừng</span>
               <td>
                   <a th:href="@{/admin/MaGiamGia/view/{id}(id=${item.id})}" class="btn btn-success  dim" >
                       <i class="fa fa-eye"></i></a>
-                <button class="btn btn-danger  dim " type="button"><i
-                    class="fa fa-trash-o"></i></button>
+                <a class="btn btn-danger dim" type="button"><i
+                    class="fa fa-trash-o"></i></a>
               </td>
 
             </tr>

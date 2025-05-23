@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <title>Chi Tiết và Cập Nhật Thông Tin Nhân Viên</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <style>
         .invalid-feedback {
             display: none;
@@ -38,6 +40,7 @@
                             <form role="form" id="employeeForm">
                                 <div class="row">
                                     <div class="col-sm-6 b-r">
+                                        <input type="hidden" id="nhanVienId" th:value="${nhanVien.id}" />
                                         <div class="form-group">
                                             <label class="required-label">Email</label>
                                             <input type="email" class="form-control" id="email" th:value="${nhanVien.email}"/>
@@ -95,7 +98,7 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="col-sm-12 text-right">
-                                                <a th:href="@{/admin/khachhang/list}" class="btn btn-white">Hủy</a>
+                                                <a th:href="@{/admin/nhanvien/list}" class="btn btn-white">Hủy</a>
                                                 <button type="button" class="btn btn-primary btn-update-promotion">Cập Nhật</button>
                                                 <button type="button" class="btn btn-danger btn-delete-promotion">Xóa</button>
                                             </div>
@@ -108,116 +111,144 @@
                 </div>
             </div>
         </div>
+        <script th:inline="javascript">
+            $('.btn-update-promotion').click(function () {
+                Swal.fire({
+                    title: 'Bạn có chắc muốn cập nhật thông tin nhân viên?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Có, cập nhật',
+                    cancelButtonText: 'Hủy bỏ'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        let id = $('#nhanVienId').val();
+                        let email = $('#email').val();
+                        let sdt = $('#sdt').val();
+                        let name = $('#name').val();
+                        let midName = $('#midName').val();
+                        let dob = $('#dob').val();
+                        let position = $('#position').val();
+                        let status = $('#trangThai').val();
+                        let gender = $('#gender').val();
+                        let firstName = $('#firstName').val();
+                        let isValid = true;
+
+                        // Reset thông báo lỗi
+                        $('.invalid-feedback').hide();
+
+                        let regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+                        if (email.length === 0 || !regex.test(email)) {
+                            $('#invalid-feedback-email').show();
+                            isValid = false;
+                        }
+
+                        if (sdt.length === 0) {
+                            $('#invalid-feedback-sdt').show();
+                            isValid = false;
+                        }
+
+                        if (name.length === 0) {
+                            $('#invalid-feedback-name').show();
+                            isValid = false;
+                        }
+
+                        if (dob.length === 0) {
+                            $('#invalid-feedback-dob').show();
+                            isValid = false;
+                        }
+
+                        if (position.length === 0) {
+                            $('#invalid-feedback-position').show();
+                            isValid = false;
+                        }
+
+                        if (gender.length === 0) {
+                            $('#invalid-feedback-gender').show();
+                            isValid = false;
+                        }
+n
+                        if (isValid) {
+                            let req = {
+                                email: email,
+                                sdt: sdt,
+                                name: name,
+                                midName: midName,
+                                dob: dob,
+                                role: position,
+                                status: status,
+                                firstName: firstName,
+                                gender: gender
+                            };
+                            console.log("DỮ LIỆU GỬI LÊN BACKEND:", req);
+
+                            $.ajax({
+                                url: '/admin/nhanvien/' + id,
+                                type: 'PUT',
+                                contentType: 'application/json',
+                                data: JSON.stringify(req),
+                                success: function (data) {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Cập nhật thành công!',
+                                        timer: 2000,
+                                        showConfirmButton: false
+                                    });
+                                    setTimeout(function () {
+                                        location.href = "/admin/nhanvien/list";
+                                    }, 2000);
+                                },
+                                error: function (data) {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Lỗi!',
+                                        text: data.responseJSON.message
+                                    });
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+            $('.btn-delete-promotion').click(function () {
+                Swal.fire({
+                    title: 'Bạn có chắc muốn xóa nhân viên này?',
+                    text: 'Hành động này không thể hoàn tác!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Có, xóa',
+                    cancelButtonText: 'Hủy bỏ'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        let id = $('#nhanVienId').val();
+
+                        $.ajax({
+                            url: '/admin/nhanvien/' + id,
+                            type: 'DELETE',
+                            success: function () {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Xóa thành công!',
+                                    timer: 2000,
+                                    showConfirmButton: false
+                                });
+                                setTimeout(function () {
+                                    location.href = "/admin/nhanvien/list";
+                                }, 2000);
+                            },
+                            error: function (data) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Lỗi!',
+                                    text: data.responseJSON?.message || 'Không thể xóa nhân viên.'
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+
+        </script>
     </div>
 </div>
-
-
-<script th:inline="javascript">
-    $('.btn-update-promotion').click(function () {
-        let email = $('#email').val();
-        let sdt = $('#sdt').val();
-        let name = $('#name').val();
-        let midName = $('#midName').val();
-        let dob = $('#dob').val();
-        let position = $('#position').val();
-        let status = $('#trangThai').val();
-        let gender = $('#gender').val();
-        let firstName = $('#firstName').val();
-        let isValid = true;
-
-        let regex = new RegExp("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
-        if (email.length === 0 || regex.test(email) === false) {
-            $('#invalid-feedback-email').show();
-            isValid = false;
-        }
-
-        if (sdt.length === 0 ) {
-            $('#invalid-feedback-sdt').show();
-            isValid = false;
-        }
-
-        if (name.length === 0) {
-            $('#invalid-feedback-name').show();
-            isValid = false;
-        }
-
-        if (dob.length === 0) {
-            $('#invalid-feedback-dob').show();
-            isValid = false;
-        }
-
-        // if (loginName.length === 0) {
-        //     $('#invalid-feedback-dob').show();
-        //     isValid = false;
-        // }
-
-        if (position.length === 0) {
-            $('#invalid-feedback-position').show();
-            isValid = false;
-        }
-
-        if(gender.length === 0){
-            $('#invalid-feedback-gender').show();
-            isValid = false;
-        }
-
-        let req;
-        if (isValid) {
-            req = {
-                email: email,
-                sdt: sdt,
-                name: name,
-                midName: midName,
-                dob: dob,
-                role: position,
-                status: status,
-                firstName: firstName,
-                gender: gender
-            }
-            const myJSON = JSON.stringify(req);
-            $.ajax({
-                url: '/admin/nhanvien/' + [[${nhanVien.id}]],
-                type: 'PUT',
-                contentType: 'application/json',
-                data: myJSON,
-                success: function (data) {
-                    toastr.success("Cập nhật thành côngggg");
-                    setTimeout(function () {
-                        location.href = "/admin/nhanvien/list";
-                    }, 5000);
-                },
-                error: function (data) {
-                    toastr.warning(data.responseJSON.message);
-                }
-            })
-        }
-    });
-
-    $('.btn-delete-promotion').click(function () {
-        swal({
-            title: 'Xóa thông tin nhân viên ?',
-            text: "Bạn có chắc chắn muốn xóa !",
-            type: 'warning',
-            showCancelButton: true
-        }).then(function (rs) {
-           if (rs.value) {
-                $.ajax({
-                    url: '/admin/nhanvien/' + [[${nhanVien.id}]],
-                    type: 'DELETE',
-                    contentType: 'application/json',
-                    success: function (data) {
-                        toastr.success("Xóa nhân viên thành công");
-                        setTimeout(function () {
-                            location.href = "/admin/nhanvien/list";
-                        }, 1000);
-                    },
-                    error: function (error) {
-                        toastr.error(error.responseJSON.message);
-                    }
-                })
-            }
-        })
-    })
-</script>
 </body>
 </html>

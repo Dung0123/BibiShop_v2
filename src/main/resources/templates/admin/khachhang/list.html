@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html layout:decorate="~{admin/layout}" lang="vi" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
 <body>
 <div class="wrapper wrapper-content" layout:fragment="content">
     <div class="row">
@@ -63,18 +66,99 @@
                                 <span th:case="1" class="badge badge-danger">Ngừng</span>
                             </td>
                             <td>
-                                <a  class="btn btn-success  dim" th:href="@{/admin/khachhang/{id}(id=${item.id})}" type="button"><i
+                                <a  class="btn btn-success dim" th:href="@{/admin/khachhang/{id}(id=${item.id})}" type="button"><i
                                         class="fa fa-eye"></i></a>
-                                <a  class="btn btn-danger  dim " type="button"><i
+                                <a  class="btn btn-danger dim btn-delete" type="button" th:attr="data-id=${item.id}"><i
                                         class="fa fa-trash-o"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" class="footable-visible">
+                                <ul class="pagination pull-right">
+                                    <li th:classappend="${currentPage == 1} ? 'disabled'">
+                                        <a th:href="@{/admin/khachhang/list(page=1)}">«</a>
+                                    </li>
+
+                                    <li th:classappend="${currentPage == 1} ? 'disabled'">
+                                        <a th:href="@{/admin/khachhang/list(page=${currentPage - 1})}">‹</a>
+                                    </li>
+
+                                    <li th:each="i : ${#numbers.sequence(1, totalPages)}"
+                                        th:classappend="${i == currentPage} ? 'active'">
+                                        <a th:href="@{/admin/khachhang/list(page=${i})}" th:text="${i}"></a>
+                                    </li>
+
+                                    <li th:classappend="${currentPage == totalPages} ? 'disabled'">
+                                        <a th:href="@{/admin/khachhang/list(page=${currentPage + 1})}">›</a>
+                                    </li>
+
+                                    <li th:classappend="${currentPage == totalPages} ? 'disabled'">
+                                        <a th:href="@{/admin/khachhang/list(page=${totalPages})}">»</a>
+                                    </li>
+                                </ul>
                             </td>
                         </tr>
                         </tbody>
                     </table>
-
                 </div>
             </div>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const deleteButtons = document.querySelectorAll('.btn-delete');
+
+                deleteButtons.forEach(button => {
+                    button.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const id = this.getAttribute('data-id');
+
+                        Swal.fire({
+                            title: 'Xác nhận xóa?',
+                            text: "Hành động này không thể hoàn tác!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#d33',
+                            cancelButtonColor: '#3085d6',
+                            confirmButtonText: 'Xóa',
+                            cancelButtonText: 'Hủy'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                fetch(`/admin/khachhang/${id}`, {
+                                    method: 'DELETE',
+                                    headers: {
+                                        'X-Requested-With': 'XMLHttpRequest',
+                                        'Content-Type': 'application/json'
+                                    }
+                                }).then(response => {
+                                    if (response.ok) {
+                                        Swal.fire(
+                                            'Đã xóa!',
+                                            'Khách hàng đã được xóa.',
+                                            'success'
+                                        ).then(() => {
+                                            location.reload();
+                                        });
+                                    } else {
+                                        Swal.fire(
+                                            'Lỗi!',
+                                            'Không thể xóa khách hàng.',
+                                            'error'
+                                        );
+                                    }
+                                }).catch(error => {
+                                    Swal.fire(
+                                        'Lỗi!',
+                                        'Có lỗi xảy ra.',
+                                        'error'
+                                    );
+                                });
+                            }
+                        });
+                    });
+                });
+            });
+        </script>
+
     </div>
 </div>
 

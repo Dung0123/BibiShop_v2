@@ -1,5 +1,20 @@
 package com.example.bibishop.service.server.HoaDon;
 
+//import com.example.bibishop.dto.HoaDonChiTietDTO;
+//import com.example.bibishop.dto.HoaDonDTO;
+//import com.example.bibishop.entity.*;
+//import com.example.bibishop.repository.GioHangRepository;
+//import com.example.bibishop.repository.HoaDonChiTietRepository;
+//import com.example.bibishop.repository.HoaDonRepository;
+//import com.example.bibishop.repository.KhachHangRepository;
+//import com.example.bibishop.repository.MaGiamGiaRepository;
+//import java.math.BigDecimal;
+//import java.time.LocalDateTime;
+//import java.util.ArrayList;
+//import java.util.Optional;
+//import org.springframework.data.domain.Page;
+//import org.springframework.data.domain.Pageable;
+//import org.springframework.stereotype.Service;
 import com.example.bibishop.dto.HoaDonChiTietDTO;
 import com.example.bibishop.dto.HoaDonDTO;
 import com.example.bibishop.entity.*;
@@ -8,7 +23,7 @@ import com.example.bibishop.repository.HoaDonChiTietRepository;
 import com.example.bibishop.repository.HoaDonRepository;
 import com.example.bibishop.repository.KhachHangRepository;
 import com.example.bibishop.repository.MaGiamGiaRepository;
-import com.example.bibishop.repository.SanPhamChiTietRepository;
+import com.example.bibishop.repository.SanPhamChiTietRepository_1;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,11 +31,10 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 @Service
 public class HoaDonService {
 
-  public final SanPhamChiTietRepository sanPhamChiTietRepository;
+  public final SanPhamChiTietRepository_1 sanPhamChiTietRepository;
 
   MaGiamGiaRepository maGiamGiaRepository;
 
@@ -33,7 +47,7 @@ public class HoaDonService {
 
   public final KhachHangRepository getKhachHangRepository;
 
-  public HoaDonService(SanPhamChiTietRepository sanPhamChiTietRepository,
+  public HoaDonService(SanPhamChiTietRepository_1 sanPhamChiTietRepository,
       HoaDonRepository hoaDonRepository, HoaDonChiTietRepository hoaDonChiTietRepository,
       GioHangRepository gioHangRepository, KhachHangRepository getKhachHangRepository) {
     this.sanPhamChiTietRepository = sanPhamChiTietRepository;

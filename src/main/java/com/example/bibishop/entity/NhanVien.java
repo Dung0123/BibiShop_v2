@@ -29,7 +29,7 @@ public class NhanVien extends SuperEntity {
   @Column(name = "gioi_tinh")
   private String gioiTinh;
 
-  @Column(name = "ho")
+  @Column(name = "ho",columnDefinition = "nvarchar(20)")
   private String ho;
 
   @Column(name = "mat_khau")
@@ -49,10 +49,10 @@ public class NhanVien extends SuperEntity {
   @Column(name = "tai_khoan")
   private String taiKhoan;
 
-  @Column(name = "ten")
+  @Column(name = "ten",columnDefinition = "nvarchar(20)")
   private String ten;
 
-  @Column(name = "ten_dem")
+  @Column(name = "ten_dem", columnDefinition = "nvarchar(20)")
   private String tenDem;
 
   @Column(name = "trang_thai")

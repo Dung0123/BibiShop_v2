@@ -1,5 +1,6 @@
 package com.example.bibishop.dto;
 
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,5 +13,5 @@ public class MauSacDTO extends SuperDTO{
     private String ten;
 
 
-    private int trangThai;
+    private String trangThai;
 }
