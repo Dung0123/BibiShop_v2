@@ -23,17 +23,22 @@
 
         @Column(name = "giaSanPham", length = 150, nullable = false)
         private BigDecimal giaSanPham;
+
         @Column(name = "soLuong", length = 50, nullable = false)
         private int soLuong;
 
         @Column(name = "trongLuong", length = 150, nullable = false)
         private String trongLuong;
+
         @Column(name = "gioiTinh", length = 10, nullable = false)
-        private int gioiTinh;
-        @Column(name = "moTa", length = 150, nullable = false)
+        private String gioiTinh;
+
+        @Column(name = "moTa", columnDefinition = "nvarchar(500)", nullable = false)
         private String moTa;
+
         @Transient
         private boolean daDoi = false;
+
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "sanpham_id")
         private SanPhamEntity sanPham;
@@ -45,17 +50,22 @@
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "kichCo_id")
         private KichCoEntity kichCo;
+
         @ManyToOne
         @JoinColumn(name = "chatLieu_id")
         private ChatLieuEntity chatLieu;
+
         @ManyToOne
         @JoinColumn(name = "hinhAnh_id")
         private HinhAnhEntity hinhAnh;
+
         @ManyToOne
         @JoinColumn(name = "danhMuc_id")
         private DanhMucEntity danhMuc;
+
         @Column(name = "trangThai", length = 10, nullable = true)
         private int trangThai;
+
         @Override
         public String toString() {
             return "SanPhamChiTietEntity{" +

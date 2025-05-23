@@ -24,7 +24,7 @@
                 </div>
             </li>
             <li>
-                <a href="layouts.html"><i class="fa fa-diamond"></i> <span class="nav-label">Bán hàng tại
+                <a th:href="@{/buyAtTheCounter}"><i class="fa fa-diamond"></i> <span class="nav-label">Bán hàng tại
                                 quầy</span></a>
             </li>
             <li class="active">
@@ -32,21 +32,20 @@
                                 phẩm</span>
                     <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
-                    <li><a href="index.html">Sản phẩm</a></li>
-                    <li><a href="dashboard_2.html">Sản phẩm chi tiết</a></li>
-                    <li><a href="dashboard_3.html">Danh mục</a></li>
-                    <li><a href="dashboard_4_1.html">Thể loại</a></li>
-                    <li><a href="dashboard_5.html">Màu sắc</a></li>
-                    <li><a href="dashboard_5.html">Kích thước</a></li>
-                    <li><a href="dashboard_5.html">Kiểu dáng</a></li>
+                    <li><a th:href="@{/admin/sanpham/getAll}">Sản phẩm</a></li>
+                    <li><a th:href="@{/admin/sanpham/SPCT}">Sản phẩm chi tiết</a></li>
+                    <li><a th:href="@{/admin/danhmuc/getAll}">Danh mục</a></li>
+                    <li><a th:href="@{/admin/chatlieu/getAll}">Chất Liệu</a></li>
+                    <li><a th:href="@{/admin/mausac/getAll}">Màu sắc</a></li>
+                    <li><a th:href="@{/admin/kichco/getAll}">Kích thước</a></li>
                 </ul>
             </li>
             <li>
                 <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Quản lý giảm
                                 giá</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
-                    <li><a href="graph_flot.html">Phiếu giảm giá</a></li>
-                    <li><a href="graph_morris.html">Đợt giảm giá</a></li>
+                    <li><a th:href="@{/admin/MaGiamGia/list}">Phiếu giảm giá</a></li>
+                    <li><a th:href="graph_morris.html">Đợt giảm giá</a></li>
                 </ul>
             </li>
             <li>

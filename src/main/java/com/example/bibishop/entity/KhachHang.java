@@ -29,7 +29,7 @@ public class KhachHang extends SuperEntity {
   @Column(name = "gioi_tinh")
   private String gioiTinh;
 
-  @Column(name = "ho")
+  @Column(name = "ho",  columnDefinition = "nvarchar(20)")
   private String ho;
 
   @Column(name = "mat_khau")
@@ -44,10 +44,10 @@ public class KhachHang extends SuperEntity {
   @Column(name = "tai_khoan")
   private String taiKhoan;
 
-  @Column(name = "ten")
+  @Column(name = "ten",  columnDefinition = "nvarchar(20)")
   private String ten;
 
-  @Column(name = "ten_dem")
+  @Column(name = "ten_dem",  columnDefinition = "nvarchar(20)")
   private String tenDem;
   private String email;
   private String password;
@@ -56,6 +56,7 @@ public class KhachHang extends SuperEntity {
 
 //  @OneToMany(mappedBy = "khachHang", cascade = CascadeType.ALL)
 //  private Set<DiaChi> diaChi; // Changed to Set<DiaChi> to hold multiple addresses
+@Column(name = "address",  columnDefinition = "nvarchar(250)")
   private String address;
   @Column(name = "vai_tro")
   private int vaiTro;

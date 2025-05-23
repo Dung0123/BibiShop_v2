@@ -10,7 +10,6 @@ function loadScript(src) {
 
 async function loadScripts() {
     try {
-        // jQuery - Tải đầu tiên
         await loadScript("/js/jquery-3.1.1.min.js");
 
         // Bootstrap - Phụ thuộc jQuery
@@ -58,6 +57,8 @@ async function loadScripts() {
         //toastr
 
         await loadScript("/shop/toastr/toastr.min.js");
+
+		await loadScript()
         // Khởi tạo MetisMenu sau khi tất cả các script đã được tải
         document.addEventListener('DOMContentLoaded', function() {
             $('#side-menu').metisMenu();

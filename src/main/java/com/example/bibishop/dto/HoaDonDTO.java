@@ -9,13 +9,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
+import java.math.BigDecimal;
+import java.time.LocalDate;
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-public class HoaDonDTO {
+@NoArgsConstructor
+public class HoaDonDTO extends SuperDTO {
 
   private Integer id;
   private Integer khachHangId;
@@ -36,9 +35,19 @@ public class HoaDonDTO {
 
   private List<HoaDonChiTietDTO> hoaDonChiTiets;
 
+  private TrangThaiHoaDonDTO trangThaiHD;
+
   public static HoaDonDTO from(HoaDon hoaDon) {
     HoaDonDTO dto = new HoaDonDTO();
     dto.setId(hoaDon.getId());
     return dto;
   }
+    private UserDTO user;
+
+
+    private BigDecimal tongTien;
+
+    private LocalDate ngayThanhToan;
+    private VoucherDTO vouCher;
+
 }

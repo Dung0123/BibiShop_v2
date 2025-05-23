@@ -5,7 +5,7 @@ import com.example.bibishop.dto.SanPhamChiTietDTO;
 import com.example.bibishop.dto.SanPhamDTO;
 import com.example.bibishop.entity.SanPhamChiTietEntity;
 import com.example.bibishop.entity.SanPhamEntity;
-import com.example.bibishop.repository.SanPhamRepository;
+import com.example.bibishop.repository.SanPhamRepository_1;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 public class SanPhamService {
 
     @Autowired
-    private SanPhamRepository sanPhamRepository;
+    private SanPhamRepository_1 sanPhamRepository;
 
     public List<SanPhamDTO> searchSanPham(String tenSanPham) {
         List<SanPhamDTO> sanPhamDTOList = new ArrayList<>();

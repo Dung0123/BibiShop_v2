@@ -12,4 +12,6 @@ public class KichCoDTO extends SuperDTO{
     private String tenKichCo;
 
     private String doDai;
+
+    private Integer trangThai;
 }

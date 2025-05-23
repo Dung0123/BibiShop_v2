@@ -60,7 +60,6 @@ public class NhanVienController {
     }
 
 
-
     @GetMapping("/{id}")
     public String showUpdateEmployeeForm(@PathVariable("id") Integer id, Model model) {
         NhanVien nhanVien = nhanVienService.getEmployeeById(id);

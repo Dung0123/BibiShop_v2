@@ -22,7 +22,7 @@ import lombok.ToString;
 @Builder
 public class SanPhamEntity extends SuperEntity {
 
-    @Column(name = "tenSanPham", length = 150, nullable = false)
+    @Column(name = "tenSanPham", columnDefinition = "nvarchar(150)", nullable = false)
     private String tenSanPham;
 
     @Column(name = "trangThai", length = 10, nullable = false)

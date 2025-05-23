@@ -10,8 +10,10 @@ public interface NhanVienRepository extends JpaRepository<NhanVien, Integer> {
     NhanVien findNhanVienByEmail(String email);
     //    Optional<NhanVien> findNhanVienByEmailOrTaiKhoan(String email, String taiKhoan);
 //    NhanVien findNhanVienByTaiKhoan(String taiKhoan);
+
     @Query(value = "SELECT nv from NhanVien nv where nv.id !=:id and nv.email LIKE CONCAT('%',:email,'%') ")
     NhanVien findNhanVienByIdAndEmail(Integer id, String email);
+
     @Query(value = "SELECT * " +
         "FROM nhan_vien as u WHERE ((?1 is null or u.ten LIKE CONCAT('%',?1,'%') or u.ho LIKE CONCAT('%',?1,'%') or u.ten_dem LIKE CONCAT('%',?1,'%') ))" +
         "AND (?2 is null or u.sdt LIKE CONCAT('%',?2,'%') )" +

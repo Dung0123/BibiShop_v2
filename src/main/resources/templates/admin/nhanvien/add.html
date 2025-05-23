@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html layout:decorate="~{admin/layout}" lang="vi" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
 <body>
 <div class="wrapper wrapper-content" layout:fragment="content">
     <div class="row">
@@ -79,8 +81,8 @@
                                             <label>Giới Tính <span style="color: red">*</span></label>
                                             <select name="gender" class="form-control" id="gender">
                                                 <option value="">Chọn giới tính</option>
-                                                <option value="Nam">Nam</option>
-                                                <option value="Nữ">Nữ</option>
+                                                <option value="0">Nam</option>
+                                                <option value="1">Nữ</option>
                                             </select>
                                             <div class="invalid-feedback" id="invalid-feedback-gender" style="color: red; display: none;">Vui lòng chọn giới tính.</div>
                                         </div>
@@ -95,162 +97,101 @@
                             </form>
                         </div>
                     </div>
-                    <div class="modal inmodal in" id="myModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none; padding-right: 15px;">
-                        <div class="modal-dialog">
-                            <div class="modal-content animated bounceInRight">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                                    <i class="fa fa-laptop modal-icon"></i>
-                                    <h4 class="modal-title">Xác nhận thông tin</h4>
-                                    <small class="font-bold">Bạn có chắc chắn muốn thêm nhân viên?</small>
-                                </div>
-                                <div class="modal-body">
-                                    <p><strong>Thông tin nhân viên</strong> sẽ được xác nhận khi bạn bấm "Lưu".</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-white" data-dismiss="modal">Đóng</button>
-                                    <button type="button" class="btn btn-primary" id="saveChangesButton">Lưu thay đổi</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
-        </div>
     </div>
 </div>
+    <script>
+        document.getElementById('btnAddEmployee').addEventListener('click', function (event) {
+            event.preventDefault();
 
+            const email = document.getElementById('email').value.trim();
+            const firstName = document.getElementById('firstName').value.trim();
+            const midName = document.getElementById('midName').value.trim();
+            const name = document.getElementById('name').value.trim();
+            const sdt = document.getElementById('sdt').value.trim();
+            const dob = document.getElementById('dob').value;
+            const password = document.getElementById('password').value.trim();
+            const position = document.getElementById('position').value;
+            const status = document.getElementById('trangThai').value;
+            const gender = document.getElementById('gender').value;
+
+            let isValid = true;
+
+            function showError(id, condition) {
+                const el = document.getElementById(id);
+                el.style.display = condition ? 'block' : 'none';
+                if (condition) isValid = false;
+            }
+
+            showError('invalid-feedback-email', !email);
+            showError('invalid-feedback-firstName', !firstName);
+            showError('invalid-feedback-midName', !midName);
+            showError('invalid-feedback-name', !name);
+            showError('invalid-feedback-sdt', !sdt);
+            showError('invalid-feedback-dob', !dob);
+            showError('invalid-feedback-password', !password);
+            showError('invalid-feedback-position', !position);
+            showError('invalid-feedback-trangThai', !status);
+            showError('invalid-feedback-gender', !gender);
+
+            if (isValid) {
+                const formData = {
+                    email: email,
+                    firstName: firstName,
+                    midName: midName,
+                    name: name,
+                    sdt: sdt,
+                    dob: dob,
+                    password: password,
+                    position: position,
+                    status: status,
+                    gender: gender
+                };
+
+                fetch('/admin/nhanvien/add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Thành công',
+                                text: 'Thêm nhân viên thành công!',
+                                timer: 2000,
+                                showConfirmButton: false
+                            });
+
+                            setTimeout(function () {
+                                window.location.href = '/admin/nhanvien/list';
+                            }, 2000);
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Thất bại',
+                                text: data.message || 'Có lỗi xảy ra!'
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Lỗi gửi dữ liệu:', error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lỗi',
+                            text: 'Đã xảy ra lỗi trong quá trình gửi dữ liệu.'
+                        });
+                    });
+            }
+        });
+    </script>
+
+</div>
 </body>
 </html>
-<script>
-    document.getElementById('btnAddEmployee').addEventListener('click', function () {
-        $('#myModal').modal('show');
-    });
 
-    document.getElementById('saveChangesButton').addEventListener('click', function (event) {
-        event.preventDefault();;
-
-        // Lấy dữ liệu từ form tạo obj tương đương createNhanVienRequest
-        const email = document.getElementById('email').value;
-        const firstName = document.getElementById('firstName').value;
-        const midName = document.getElementById('midName').value;
-        const name = document.getElementById('name').value;
-        const sdt = document.getElementById('sdt').value;
-        const dob = document.getElementById('dob').value;
-        const password = document.getElementById('password').value;
-        const position = document.getElementById('position').value;
-        const status = document.getElementById('trangThai').value;
-        const gender = document.getElementById('gender').value;
-
-        // validation form
-        let isValid = true;
-
-        if (!email) {
-            document.getElementById('invalid-feedback-email').style.display = 'block';
-            isValid = false;
-        } else {
-            document.getElementById('invalid-feedback-email').style.display = 'none';
-        }
-
-        if (!firstName) {
-            document.getElementById('invalid-feedback-firstName').style.display = 'block';
-            isValid = false;
-        } else {
-            document.getElementById('invalid-feedback-firstName').style.display = 'none';
-        }
-
-        if (!midName) {
-            document.getElementById('invalid-feedback-midName').style.display = 'block';
-            isValid = false;
-        } else {
-            document.getElementById('invalid-feedback-midName').style.display = 'none';
-        }
-
-        if (!name) {
-            document.getElementById('invalid-feedback-name').style.display = 'block';
-            isValid = false;
-        } else {
-            document.getElementById('invalid-feedback-name').style.display = 'none';
-        }
-
-        if (!sdt) {
-            document.getElementById('invalid-feedback-sdt').style.display = 'block';
-            isValid = false;
-        } else {
-            document.getElementById('invalid-feedback-sdt').style.display = 'none';
-        }
-
-        if (!dob) {
-            document.getElementById('invalid-feedback-dob').style.display = 'block';
-            isValid = false;
-        } else {
-            document.getElementById('invalid-feedback-dob').style.display = 'none';
-        }
-
-        if (!password) {
-            document.getElementById('invalid-feedback-password').style.display = 'block';
-            isValid = false;
-        } else {
-            document.getElementById('invalid-feedback-password').style.display = 'none';
-        }
-
-        if (!position) {
-            document.getElementById('invalid-feedback-position').style.display = 'block';
-            isValid = false;
-        } else {
-            document.getElementById('invalid-feedback-position').style.display = 'none';
-        }
-
-        if (!status) {
-            document.getElementById('invalid-feedback-trangThai').style.display = 'block';
-            isValid = false;
-        } else {
-            document.getElementById('invalid-feedback-trangThai').style.display = 'none';
-        }
-
-        if (!gender) {
-            document.getElementById('invalid-feedback-gender').style.display = 'block';
-            isValid = false;
-        } else {
-            document.getElementById('invalid-feedback-gender').style.display = 'none';
-        }
-
-        if (isValid) {
-            const formData = {
-                email: email,
-                firstName: firstName,
-                midName: midName,
-                name: name,
-                sdt: sdt,
-                dob: dob,
-                password: password,
-                position: position,
-                status: status,
-                gender: gender
-            };
-
-            fetch('/admin/nhanvien/add', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        toastr.success('Thêm nhân viên thành công', 'Thông báo');
-                        setTimeout(function () {
-                            window.location.href = '/admin/nhanvien/list';
-                        }, 2000);
-                    } else {
-                        toastr.error('Có lỗi xảy ra: ' + data.message, 'Lỗi');
-                    }
-                })
-                .catch(error => {
-                    console.error('Có lỗi xảy ra:', error);
-                    toastr.error('Đã có lỗi khi gửi dữ liệu.', 'Lỗi');
-                });
-        }
-    });
-</script>

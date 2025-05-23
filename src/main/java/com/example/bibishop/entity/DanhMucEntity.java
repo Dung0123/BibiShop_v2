@@ -22,8 +22,11 @@ import lombok.ToString;
 public class DanhMucEntity extends SuperEntity{
 
 
-    @Column(name = "tenDanhMuc", length = 20, nullable = false)
+    @Column(name = "tenDanhMuc",  columnDefinition = "nvarchar(20)", nullable = false)
     private String tenDanhMuc;
+
+    @Column(name="trang_thai" )
+    private int trangThai;
 
     @JsonIgnore
     @OneToMany(mappedBy = "danhMuc")

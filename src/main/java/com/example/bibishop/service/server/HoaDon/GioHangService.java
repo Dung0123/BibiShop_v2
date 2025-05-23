@@ -5,7 +5,7 @@ import com.example.bibishop.repository.DotGiamGiaRepository;
 import com.example.bibishop.repository.GioHangChiTietRepository;
 import com.example.bibishop.repository.GioHangRepository;
 import com.example.bibishop.repository.MaGiamGiaRepository;
-import com.example.bibishop.repository.SanPhamChiTietRepository;
+import com.example.bibishop.repository.SanPhamChiTietRepository_1;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -22,14 +22,14 @@ public class GioHangService {
   private final GioHangChiTietRepository gioHangChiTietRepository;
   private final MaGiamGiaRepository maGiamGiaRepository;
   private final DotGiamGiaRepository dotGiamGiaRepository;
-  private final SanPhamChiTietRepository sanPhamChiTietRepository;
+  private final SanPhamChiTietRepository_1 sanPhamChiTietRepository;
 
   @Autowired
   public GioHangService(GioHangRepository gioHangRepository,
       GioHangChiTietRepository gioHangChiTietRepository,
       MaGiamGiaRepository maGiamGiaRepository,
       DotGiamGiaRepository dotGiamGiaRepository,
-      SanPhamChiTietRepository sanPhamChiTietRepository) {
+      SanPhamChiTietRepository_1 sanPhamChiTietRepository) {
     this.gioHangRepository = gioHangRepository;
     this.gioHangChiTietRepository = gioHangChiTietRepository;
     this.maGiamGiaRepository = maGiamGiaRepository;
